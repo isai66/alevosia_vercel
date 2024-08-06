@@ -1,0 +1,169 @@
+/*.loginPage{
+    height: 100vh;
+    width: 50%;
+    margin: auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 7px 50px rgb(214, 223, 213);  
+}*/
+.containersignup{
+    height: 45%;
+    width: 50%;
+    margin: 20px auto;
+    border-radius: 3%;
+    padding: 5px 20px 20px 20px;
+    background-color: #eed0b4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.title{
+    position: relative;
+    font-size: 150%;
+    font-weight: 800;
+}
+.btn1{
+    background: transparent;
+    color: var(--primaryColor);
+    transition: .3s ease;
+}
+
+.btn1:hover{
+    background: transparent;
+    color: black;
+}
+
+.formDiv{
+    flex-basis: 50%;
+    margin: auto;
+    flex-direction: column;
+    gap: 1.5rem;
+    transform: translateY(-1rem);
+}
+
+.headerDiv{
+    text-align: center;
+}
+.formsignup{
+    gap: 1rem;
+    display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+}
+.inputDiv{
+    
+}
+.icon{
+
+}
+input{
+    background: white;
+    color: none;
+    border: none;
+    width: 200px;
+}
+label{
+    color:black;
+    font-weight: 400;
+    font-size: 14px;
+    padding: .5rem 0;
+    display: block;
+}
+/*.input{
+    gap: .5rem;
+    padding: 1rem;
+    background: var(--inputColor);
+    border-radius: 10px;
+}*/
+
+.btnSignup{
+    background: rgb(139, 101, 30);
+    padding: 1 0 .8rem 0 ;
+    border-radius: 10px;
+    color: white;
+    align-items: center;
+    margin: 14% auto 5%;
+    justify-content: center;
+    width: 60%;
+    gap: .5rem;
+    transition: .3s ease;
+    height: 40%;
+}
+
+.iconbtn{
+    padding-left: 1%;
+    font-size: 25px;
+    transition: .3s ease;
+    transform: translateY(0.2rem); 
+}
+
+.btnSignup:hover{
+    background: #663b13;
+    padding: 1 0 .8rem 0 ;
+    border-radius: 10px;
+    color: white;
+    align-items: center;
+    margin: 14% auto 5%;
+    justify-content: center;
+    width: 100%;
+    gap: .5rem;
+    transition: .3s ease;
+    height: 40%;
+    .iconbtn{
+        padding-left: 1%;
+        font-size: 25px;
+        transition: .3s ease;
+
+       transform: translate(1rem,0.1rem)
+    }
+}
+
+.selectBox {
+    width: 100%; /* Ancho del 100% del contenedor padre */
+    max-width: 300px; /* Ajusta este valor según tus necesidades */
+}
+
+.colonia{
+    background: white;
+    color: none;
+    border: none;
+    width: 220px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+@media screen and (max-width:678px){
+    
+    .title{
+        font-size: 150%;
+        font-weight: 800;
+    }
+    .btn1{
+        background: transparent;
+        color: var(--primaryColor);
+        transition: .3s ease;
+    }
+    
+    .btn1:hover{
+        background: transparent;
+        color: black;
+    }
+    .formDiv{
+        flex-basis: 50%;
+        margin: auto;
+        flex-direction: column;
+        gap: 1rem;
+        transform: translateY(-1rem);
+    }
+    input{
+        background: white;
+        color: none;
+        border: none;
+        width: 50%;
+    }
+    .formsignup{
+        gap: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2%;
+    }
+    
+}

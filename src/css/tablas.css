@@ -1,0 +1,28 @@
+/* 
+.tabla{
+    padding-top: 10%;
+    font-size: small;
+    padding-bottom: 10%;
+}
+
+th{
+    background: #4b9db6;
+}
+th,td{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
+    font-size: small;
+}
+tbody{
+    background-color: rgb(167, 184, 201);
+    border-bottom: solid 5px #c9cbce;
+    color: rgb(19, 16, 16);
+}
+tr:nth-child(even){
+    background-color: rgb(148, 153, 163);
+}
+tr:hover{
+    background-color: #267e99;
+    color: beige;
+}
+ */

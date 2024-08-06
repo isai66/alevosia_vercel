@@ -1,0 +1,33 @@
+.cajaDiv{
+    display: flex;
+    justify-content: center;
+    margin-left: 8%;
+    margin-right: 8%;
+    padding: 2%;
+}
+.caja {
+    max-width: 500px;
+    width: 50vw; /* El ancho será el 50% del ancho de la ventana */
+    height: 18vh; /* La altura será el 50% de la altura de la ventana */
+    background-color: rgb(74, 194, 90); /* Color de fondo (cambia según tus necesidades) */
+    display: flex;
+    border-radius: 10px;
+}
+.headerMen{
+    display: flex;
+    justify-content: end;
+    text-align: end;
+    padding-right: 5%;
+}
+.menbanner{
+    height: 18vh;
+    display: flex;
+    justify-content: start;
+    border-radius: 10px;
+}
+.textoCaja{
+    display: flex;
+    padding-top: 4%;
+    padding-left: 1%;
+    color: white;
+}
