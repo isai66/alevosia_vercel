@@ -38,7 +38,7 @@ const Signup = () => {
 
     useEffect(() => {
         if (codigoPostal.length === 5) {
-            Axios.get(`http://localhost:3001/codigo_postal?cp=${codigoPostal}`)
+            Axios.get(`https://alev-backend-vercel.vercel.app/codigo_postal?cp=${codigoPostal}`)
                 .then(response => {
                     const data = response.data;
                     console.log(data.codigo_postal)
@@ -79,7 +79,7 @@ const Signup = () => {
     };
 
     const checkUserExists = (usuario) => {
-        return Axios.get(`http://localhost:3001/usuarioExiste?usuario=${usuario}`)
+        return Axios.get(`https://alev-backend-vercel.vercel.app/usuarioExiste?usuario=${usuario}`)
             .then(response => response.data.exists)
             .catch(error => {
                 console.error("Error checking user existence: ", error);
@@ -102,7 +102,7 @@ const Signup = () => {
             return;
         }
 
-        Axios.post("http://localhost:3001/signup",{
+        Axios.post("https://alev-backend-vercel.vercel.app/signup",{
             usuario:usuario,
             nombre:nombre,
             apellido:apellido,
