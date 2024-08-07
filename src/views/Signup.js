@@ -8,10 +8,7 @@ import { AiOutlineSwapRight } from "react-icons/ai";
 import { MdMarkEmailRead } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
-//import '../components/ValidaSignUp'
-
-
-import "../css/signup.css"
+import "../css/signup.css";
 
 const Signup = () => {
 
@@ -58,8 +55,8 @@ const Signup = () => {
 
     const validateFields = () => {
         const newErrors = {};
-        const regexLetters = /^[a-zA-Z\s]+$/;
-        const regexUsername = /^[a-zA-Z0-9]+$/;
+        const regexLetters = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/;
+        const regexUsername = /^[a-zA-Z0-9!#$%^&*()_=\[\]{};:'"<>\/\\|`~]+$/;
         const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
@@ -70,12 +67,13 @@ const Signup = () => {
         if (numint !== "" && parseInt(numint) < 0) newErrors.numint = "El número interior no puede ser negativo.";
         if (!codigoPostal) newErrors.codigoPostal = "El codigo postal es obligatorio.";
         if (telefono.length !== 10 || isNaN(telefono) || parseInt(telefono) < 0) newErrors.telefono = "El teléfono debe tener 10 caracteres y no puede ser negativo.";
-        if (!regexUsername.test(usuario)) newErrors.usuario = "El usuario solo puede contener letras y números.";
+        if (!regexUsername.test(usuario)) newErrors.usuario = "El usuario solo puede contener letras, números y algunos caracteres especiales como guión bajo.";
         if (!regexEmail.test(correo)) newErrors.correo = "El correo no tiene un formato válido.";
         if (!regexPassword.test(contrasena)) newErrors.contrasena = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
 
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+    console.log("Errores de validación:", newErrors); // Imprimir errores de validación en la consola
+    return Object.keys(newErrors).length === 0;
     };
 
     const checkUserExists = (usuario) => {
@@ -87,11 +85,11 @@ const Signup = () => {
             });
     };
 
-    const createUser = async  (e)=>{
+    const createUser = async (e)=>{
         e.preventDefault()
+
         if (!validateFields()) return;
 
-        setIsSubmitting(true);
         setError("");
 
         const userExists = await checkUserExists(usuario);
@@ -101,7 +99,6 @@ const Signup = () => {
             setIsSubmitting(false);
             return;
         }
-
         Axios.post("https://alev-backend-vercel.vercel.app/signup",{
             usuario:usuario,
             nombre:nombre,
@@ -259,7 +256,7 @@ const Signup = () => {
                                 </span>
                                 <input type="number" id='telefono' placeholder='Ingrese número telefónico' value={telefono} onChange={(event)=>{setTelefono(event.target.value)}} className="flex-1 block rounded-none rounded-r-md border-gray-300"/>
                             </div>
-                            {errors.telefono && <p className="text-red-500 text-xs italic">{errors.telefono}</p>}
+                            {errors.telefono && <p className="text-red-500 text-sm mt-2">{errors.telefono}</p>}
                         </div>
 
                         <div class='inputDiv'>
@@ -275,7 +272,8 @@ const Signup = () => {
                             <div className="text-red-500 text-sm mt-2">
                                 {error}
                             </div>
-                        )}   
+                        )} 
+                        {errors.usuario && <p className="text-red-500 text-sm mt-2">{errors.usuario}</p>}  
                         </div>
                                        
 
@@ -287,7 +285,7 @@ const Signup = () => {
                                 </span>
                                 <input type="email" id='email' placeholder='Ingrese su correo electrónico' value={correo} onChange={(event)=>{setCorreo(event.target.value)}} className="flex-1 block rounded-none rounded-r-md border-gray-300"/>
                             </div>
-                            {errors.correo && <p className="text-red-500 text-xs italic">{errors.correo}</p>}
+                            {errors.correo && <p className="text-red-500 text-sm mt-2">{errors.correo}</p>}
                         </div>
 
                         <div class='inputDiv'>
@@ -298,7 +296,7 @@ const Signup = () => {
                             </span>
                                 <input type="password" id='password' placeholder='Ingrese su contraseña' value={contrasena} onChange={(event)=>{setContrasena(event.target.value)}} className="flex-1 block rounded-none rounded-r-md border-gray-300"/>
                             </div>
-                            {errors.contrasena && <p className="text-red-500 text-xs italic">{errors.contrasena}</p>}
+                            {errors.contrasena && <p className="text-red-500 text-sm mt-2">{errors.contrasena}</p>}
 
                         </div>
 
@@ -321,34 +319,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-/*
-const [data, setData] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try 
-            {
-                const response = await axios.get("http://localhost:3001/usuarios");
-                setData(response.data);
-            } 
-            catch (error)
-            {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
-    },[]);
-
-    return (
-        <div>
-            <h1>Data from API:</h1>
-            <ul>
-                {data.map((item, index) => (
-                    <li key={index}>{item.nombre}</li> // Suponiendo que "nombre" es un campo en tu tabla MySQL
-                ))}
-            </ul>
-        </div>
-    )
-
-*/
