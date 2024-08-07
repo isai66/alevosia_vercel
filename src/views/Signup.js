@@ -72,7 +72,6 @@ const Signup = () => {
         if (!regexPassword.test(contrasena)) newErrors.contrasena = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
 
         setErrors(newErrors);
-    console.log("Errores de validación:", newErrors); // Imprimir errores de validación en la consola
     return Object.keys(newErrors).length === 0;
     };
 
