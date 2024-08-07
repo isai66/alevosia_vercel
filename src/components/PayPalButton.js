@@ -11,14 +11,14 @@ function PayPalButton({ total }) {
       window.location.reload();
     }
   return (
-    <PayPalScriptProvider options={{ "client-id": "Aevm832RAu3vO5qmOb1TzV7Rmvqefppr3t8BKmmYglRIyV78TJ7aPF3GuuXMGC02Orz8DbVDYL7yB_K4" }}>
+    <PayPalScriptProvider options={{ "client-id": "Aevm832RAu3vO5qmOb1TzV7Rmvqefppr3t8BKmmYglRIyV78TJ7aPF3GuuXMGC02Orz8DbVDYL7yB_K4", currency: "MXN" }}>
       <PayPalButtons
         createOrder={(data, actions) => {
           return actions.order.create({
             purchase_units: [
               {
                 amount: {
-                  value: total,
+                  value: total
                 },
               },
             ],
