@@ -31,7 +31,6 @@ function PayPalButton({ total }) {
               total: total
             }
             axios.post('https://alev-backend-vercel.vercel.app/compra', datos)
-            axios.post('https://alev-backend-vercel.vercel.app/compra', datos)
             .then(response => {
             message.success('Compra realizada con éxito', details.payer.name.given_name);
             refreshPage();
