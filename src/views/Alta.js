@@ -54,7 +54,7 @@ const getUsuarios = ()=>{
 
   const onloadProductos= async () => {
     try {
-      const response = await fetch('http://localhost/webservice_alevosia/obtenerProductos.php', {
+      const response = await fetch('https://alevosia.host8b.me/Web_Services/obtenerProductos.php', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const getUsuarios = ()=>{
 
   const onloadDatosProducto = async () => {
     try {
-      const response = await fetch('http://localhost/webservice_alevosia/obtenerDatosProducto.php', {
+      const response = await fetch('https://alevosia.host8b.me/Web_Services/obtenerDatosProducto.php', {
           method: 'POST',
           headers: 
           {
@@ -161,7 +161,7 @@ const getUsuarios = ()=>{
     try 
     {
 
-      const response = await fetch('http://localhost/webservice_alevosia/obtenerDatosTipo.php', {
+      const response = await fetch('https://alevosia.host8b.me/Web_Services/obtenerDatosTipo.php', {
           method: 'POST',
           headers: 
           {
@@ -296,7 +296,7 @@ const onSubmit = async (data, event) => {
     }
 
     console.log(datos);
-    const response = await fetch('http://localhost/webservice_alevosia/upload.php', {
+    const response = await fetch('https://alevosia.host8b.me/Web_Services/upload.php', {
       method: 'POST',
       body: formData,
     });
