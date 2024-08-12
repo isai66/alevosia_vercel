@@ -108,10 +108,53 @@ label{
         padding-left: 1%;
         font-size: 25px;
         transition: .3s ease;
-        transform: translateY(0.1rem);
+        transform: translate(1rem,0.1rem);
        /* transform: translateX(6px)*/
     }
 }
+
+.btnLogin2{
+    background: rgb(139, 101, 30);
+    padding: 0.3 0 .8rem 0 ;
+    border-radius: 10px;
+    color: white;
+    align-items: center;
+    margin: 2% auto;
+    justify-content: center;
+    width: 45%;
+    gap: .5rem;
+    transition: .3s ease;
+    height: 50px;
+}
+
+.iconbtn2{
+    padding-left: 1%;
+    font-size: 20px;
+    transition: .3s ease;
+    transform: translateY(0.1rem); 
+}
+
+.btnLogin2:hover{
+    background: #663b13;
+    padding: 0.3 0 .8rem 0 ;
+    border-radius: 10px;
+    color: white;
+    align-items: center;
+    margin: 2% auto;
+    justify-content: center;
+    width: 100%;
+    gap: .5rem;
+    transition: .3s ease;
+    height: 50px;
+    .iconbtn2{
+        padding-left: 1%;
+        font-size: 22px;
+        transition: .3s ease;
+        transform: translate(1rem,0.1rem) rotate(180deg);
+       /* transform: translateX(6px)*/
+    }
+}
+
 .showMessage{
     display: inline-block;
     color: white;

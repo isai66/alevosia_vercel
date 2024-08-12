@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import React, {useState} from 'react';
 import Plantilla from './views/Plantilla';
 import Inicio from './views/Inicio';
+import Inicio2 from './views/Inicio2';
 import Men from './views/Men';
 import NotFound from './views/404';
 import Women from './views/Women';
@@ -13,7 +14,6 @@ import Signup from './views/Signup';
 import Login from './views/Login';
 import Login2 from './views/Login2';
 import { Outlet, Link } from 'react-router-dom';
-import Registro2 from './views/Registro2';
 import Dashboard from './views/Dashboard';
 import Alta from './views/Alta';
 import EnviarCorreo from './views/EnviarCorreo';
@@ -24,6 +24,10 @@ import { AuthProvider, useAuth} from './components/authUser';
 import CartContent from './components/cart/CartContent';
 import DescripcionProductos from './views/DescripcionProductos';
 import PedidoEstado from './views/PedidoEstado';
+import AdminProfile from './components/AdminProfile';
+import UsersProfile from './components/UsersProfile';
+import Registro2 from './views/Registro2';
+import EditProfile from './views/EditProfile';
 function App() {
 
   return (
@@ -36,6 +40,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Plantilla/>}>
             <Route path='/' element={<Inicio/>}/>
+            <Route path='Inicio2' element={<Inicio2/>}/>
             <Route path='Men' element={<Men/>}/>
             <Route path='Women' element={<Women/>}/>
             <Route path='Somos' element={<Somos/>}/>
@@ -43,9 +48,10 @@ function App() {
             <Route path="Women/Producto1" element={<Producto1/>}/>
             <Route path="Signup" element={<Signup/>}/>
             <Route path="Login" element={<Login2/>}/>
+            <Route path="Registro2" element={<Registro2/>}/>
 
-            <Route path="Registro2" element={<PrivateRoute><Registro2/></PrivateRoute>}/>
             <Route path="Dashboard" element={<PrivateRouteUser><Dashboard/></PrivateRouteUser>}/>
+
             <Route path="Profile" element={<PrivateRouteUser><Profile/></PrivateRouteUser>}/>   
             <Route path="Cart" element={<PrivateRouteUser><CartContent/></PrivateRouteUser>}/>
             <Route path="Alta" element={<PrivateRoute><AltaProductos/></PrivateRoute>}/>
@@ -54,6 +60,9 @@ function App() {
             <Route path="ActualizarContra" element={<ActualizarContra/>}/>
             <Route path="Descripcion/:id" element={<DescripcionProductos/>}/>
             <Route path="PedidoEstado" element={<PedidoEstado/>}/>
+            <Route path="Dashboard/AdminProfile" element={<AdminProfile/>}/>
+            <Route path="Dashboard/UsersProfile" element={<UsersProfile/>}/>
+            <Route path="Dashboard/EditProfile" element={<PrivateRouteUser><EditProfile/></PrivateRouteUser>}/>
 
       
             <Route path='*' element={<NotFound/>}/>

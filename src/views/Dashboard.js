@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../components/authUser'; 
 import AdminOptions from '../components/AdminOptions';
 import ClientOptions from '../components/ClientOptions';
+import BreadCrumb from '../components/BreadCrumb';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const { userData, isAuthenticated, logout } = useAuth();
@@ -20,7 +22,9 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-start pt-5 justify-center">
+    <div className='flex flex-wrap flex-col items-center'>
+      <BreadCrumb/>
+      <div className="min-h-screen flex items-start pt-5 justify-center">
       <div className="max-w-4xl w-full bg-white shadow-md rounded-lg p-8">
 
       <h1 className="text-3xl font-bold text-center mb-6">Bienvenido: {userData.username}</h1>
@@ -36,6 +40,7 @@ const Dashboard = () => {
         <p className="text-center text-gray-600">No estás autenticado</p>
       )}
       </div>
+    </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BreadCrumb from './BreadCrumb';
 
-const AdminProfile = () => {
+const UsersProfile = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -13,7 +13,7 @@ const AdminProfile = () => {
     // Fetch users from the server
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/usersAdmin'); // Adjust the URL as needed
+        const response = await axios.get('http://localhost:3001/usersNormal'); // Adjust the URL as needed
         setUsers(response.data);
         setFilteredUsers(response.data);
       } catch (error) {
@@ -77,10 +77,10 @@ const AdminProfile = () => {
               <td className="py-2 px-4 border-b text-center">{user.rol}</td>
               <td className="py-2 px-4 border-b text-center">
                 <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
-                  onClick={() => handleConvertToEmployee(user.id_usuario)}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  onClick={() => handleConvertToUser(user.id_usuario)}
                 >
-                  Convertir a Empleado
+                  Ya No Es Empleado
                 </button>
               </td>
             </tr>
@@ -118,9 +118,9 @@ const AdminProfile = () => {
   );
 };
 
-const handleConvertToEmployee = async (userId) => {
+const handleConvertToUser = async (userId) => {
   try {
-    await axios.post(`http://localhost:3001/convertToEmployee/${userId}`);
+    await axios.post(`http://localhost:3001/convertToUser/${userId}`);
     alert('Usuario convertido a empleado.');
     // Optionally, you can refresh the user list here
   } catch (error) {
@@ -128,4 +128,4 @@ const handleConvertToEmployee = async (userId) => {
   }
 };
 
-export default AdminProfile;
+export default UsersProfile;

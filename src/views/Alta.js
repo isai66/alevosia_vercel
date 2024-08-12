@@ -41,7 +41,7 @@ const getUsuarios = ()=>{
     formState: { errors },
   } = useForm();
 
-  const TraerProductos = () => axios.get('https://alev-backend-vercel.vercel.app/productosGeneral')
+  const TraerProductos = () => axios.get('http://localhost:3001/productosGeneral')
   const [products, setProducts] = useState([]);
     
     useEffect(()=>{
@@ -54,7 +54,7 @@ const getUsuarios = ()=>{
 
   const onloadProductos= async () => {
     try {
-      const response = await fetch('https://alevosia.host8b.me/Web_Services/obtenerProductos.php', {
+      const response = await fetch('http://localhost/webservice_alevosia/obtenerProductos.php', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const getUsuarios = ()=>{
 
   const onloadDatosProducto = async () => {
     try {
-      const response = await fetch('https://alevosia.host8b.me/Web_Services/obtenerDatosProducto.php', {
+      const response = await fetch('http://localhost/webservice_alevosia/obtenerDatosProducto.php', {
           method: 'POST',
           headers: 
           {
@@ -161,7 +161,7 @@ const getUsuarios = ()=>{
     try 
     {
 
-      const response = await fetch('https://alevosia.host8b.me/Web_Services/obtenerDatosTipo.php', {
+      const response = await fetch('http://localhost/webservice_alevosia/obtenerDatosTipo.php', {
           method: 'POST',
           headers: 
           {
@@ -296,7 +296,7 @@ const onSubmit = async (data, event) => {
     }
 
     console.log(datos);
-    const response = await fetch('https://alevosia.host8b.me/Web_Services/upload.php', {
+    const response = await fetch('http://localhost/webservice_alevosia/upload.php', {
       method: 'POST',
       body: formData,
     });
@@ -359,12 +359,10 @@ const urlImage='../image/'
           <section className='w-full flex flex-col'>
             <TitlePage label="Productos"/>
             <div className="mb-4 md:mb-0 rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-6 xl:p-8 ">
-              <div className='m-auto' style={{ height: 600, width: 1100 }}>
+              <div className='m-auto'>
                 <header>
-                  <div className="mb-2 block">
-                    <Label htmlFor="email4" value="Agregar Productos" />
-                  </div>
-                  <div className="flex items-center">
+
+                  <div className="flex justify-center items-center">
                     <Button className="ml-2" onClick={() => setOpenModal(true)}>
                       Añadir Productos
                     </Button> 

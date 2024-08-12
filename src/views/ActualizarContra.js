@@ -4,10 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { message } from 'antd';
+import { BsFillShieldLockFill } from "react-icons/bs";
+import { MdMarkEmailRead } from "react-icons/md";
+
 
 const ActualizarContra = () => {
     const navigate = useNavigate();
     const [correo, setCorreo] = useState('');
+    const [usuario, setUsuario] = useState('');
     const [contrasenia, setContrasenia] = useState('');
     const [confirmarContrasenia, setConfirmarContrasenia] = useState('');
 
@@ -15,7 +19,7 @@ const ActualizarContra = () => {
     const [errorTextConfirmacion, setErrorTextConfirmacion] = useState('');
     const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
     const [mostrarContrasenia2, setMostrarContrasenia2] = useState(false);
-    
+
     useEffect(() => {
         if (errorText !== '') {
             const timer = setTimeout(() => {
@@ -49,8 +53,8 @@ const ActualizarContra = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        if (correo === '') {
-            message.warning('Por favor, ingrese su correo electrónico.');
+        if (correo === '' || usuario === '') {
+            message.warning('Por favor, ingrese su correo electrónico y su usuario.');
         } else {
             validarConfirmacionContrasenia();
         }
@@ -66,89 +70,116 @@ const ActualizarContra = () => {
 
     const actualizarContrasenia = async () => {
         const datos = {
+            usuario: usuario,
             correo: correo,
             contrasenia: contrasenia
         };
         try {
             console.log(datos);
-                const response = await fetch('https://alevosia.host8b.me/Web_Services/Alevosia/actualizarContraChay.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(datos),
-                });
-                const { success } = await response.json();
-                if (success === true) {
-                    message.success('Cambio de contraseña Exitoso.')
-                    navigate('/Login');
-                } else {
-                    message.error('Error al actualizar la contraseña')
-                }
-            } catch (error) {
-                console.log('Error al actualizar los datos...');
-                navigate('/NotServe');
+            //const response = await fetch('https://telesecundaria763.host8b.me/Web_Services/TeleSecundaria763/actualizarContraChay.php', {
+            const response = await fetch('http://localhost/webservice_alevosia/actualizarContraChay.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datos),
+            });
+            const { success } = await response.json();
+            if (success === true) {
+                message.success('Cambio de contraseña Exitoso.')
+                navigate('/Login');
+            } else {
+                message.error('Error al actualizar la contraseña')
             }
-        };
-        const toggleMostrarContrasenia = () => {
-            setMostrarContrasenia(!mostrarContrasenia);
-        };
-        const toggleMostrarContrasenia2 = () => {
+        } catch (error) {
+            console.log('Error al actualizar los datos...');
+            navigate('/NotServe');
+        }
+    };
+    const toggleMostrarContrasenia = () => {
+        setMostrarContrasenia(!mostrarContrasenia);
+    };
+    const toggleMostrarContrasenia2 = () => {
         setMostrarContrasenia2(!mostrarContrasenia2);
     };
 
     return (
         <div>
-            <div className="container-olvContra" style={{ backgroundColor: '#f7f7f7', minHeight: '110vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <div className="container-Olvi">
-                <img src={logo} alt="Logo de la Empresa" className="company-logo-olvi" style={{ margin: '0 auto', display: 'block' }} />
-                <h1>Actualice su contraseña</h1>
-                <p>Introduce una nueva contraseña segura.</p>
-
-                {errorText && <p style={{ color: 'red' }}>{errorText}</p>}
-                {errorTextConfirmacion && <p style={{ color: 'red' }}>{errorTextConfirmacion}</p>}
-
-                <form onSubmit={handleFormSubmit}>
-                    <div className="input-group" style={{ position: 'relative' }}>
-                        <label htmlFor="correo">Correo electronico:</label>
-                        <input type="text" id="correo" name="correo" value={correo}
-                            onChange={(e) => { setCorreo(e.target.value) }} required
-                            style={{ borderRadius: '5px' }} placeholder='Ingrese su correo como verificación'/>
+            <div class="containerlogin">
+                <div className="col-md-4">
+                    <div class='title'>
+                        <h2>Actualiza Tu Contraseña</h2>
                     </div>
+                    <h3 className="text-lg font-medium mb-4 mt-4 text-center">Introduce una nueva contraseña segura</h3>
 
-                    <div className="input-group" style={{ position: 'relative' }}>
-                        <label htmlFor="contrasenia">Nueva contraseña:</label>
-                        <input type={mostrarContrasenia ? 'text' : 'password'} id="contrasenia" name="contrasenia" value={contrasenia}
-                            onChange={(e) => { setContrasenia(e.target.value); const erro = Validaciones_Contras(e.target.value); setErrorText(erro); }} required
-                            style={{ borderRadius: '5px' }} placeholder='Ingrese una nueva contraseña'/>
-                        <button type="button" onClick={toggleMostrarContrasenia}
-                            style={{ position: 'absolute', right: '5px', top: '70%', transform: 'translateY(-50%)', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
-                            {mostrarContrasenia ? (<FontAwesomeIcon icon={faEyeSlash} />) : (<FontAwesomeIcon icon={faEye} />)}
-                        </button>
-                    </div>
+                    {errorText && <p className="text-lg font-medium mb-4 mt-4 text-center" style={{ color: 'red' }}>{errorText}</p>}
+                    {errorTextConfirmacion && <p className="text-lg font-medium mb-4 mt-4 text-center" style={{ color: 'red' }}>{errorTextConfirmacion}</p>}
 
-                    <div className="input-group">
-                        <label htmlFor="confirmarContrasenia">Confirmar contraseña:</label>
-                        <input type={mostrarContrasenia2 ? 'text' : 'password'} id="confirmarContrasenia" name="confirmarContrasenia" value={confirmarContrasenia}
-                            onChange={(e) => { setConfirmarContrasenia(e.target.value); setErrorTextConfirmacion(''); }} required
-                            style={{ borderRadius: '5px' }} placeholder='Confirma la contraseña'/>
-                        <button type="button" onClick={toggleMostrarContrasenia2}
-                            style={{ position: 'absolute', right: '5px', top: '70%', transform: 'translateY(-50%)', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
-                            {mostrarContrasenia2 ? (<FontAwesomeIcon icon={faEyeSlash} />) : (<FontAwesomeIcon icon={faEye} />)}
-                        </button>
-                    </div>
+                    <form className='space-y-4' onSubmit={handleFormSubmit}>
+                        <div className="inputDiv">
+                            <label htmlFor="usuario">Usuario:</label>
+                            <div className="mt-1 flex rounded-md shadow-sm">
+                                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                    <MdMarkEmailRead />
+                                </span>
+                                <input type="text" id="usuario" name="usuario" value={usuario}
+                                    onChange={(e) => { setUsuario(e.target.value) }} required
+                                    className="flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder='Ingrese su nombre de usuario' />
+                            </div>
+                        </div>
+                        <div className="inputDiv">
+                            <label htmlFor="correo">Correo electronico:</label>
+                            <div className="mt-1 flex rounded-md shadow-sm">
+                                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                    <MdMarkEmailRead />
+                                </span>
+                                <input type="text" id="correo" name="correo" value={correo}
+                                    onChange={(e) => { setCorreo(e.target.value) }} required
+                                    className="flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder='Ingrese su correo como verificación' />
+                            </div>
+                        </div>
+                        <div className="inputDiv">
+                            <label htmlFor="contrasenia">Nueva Contraseña:</label>
+                            <div className="mt-1 flex rounded-md shadow-sm">
+                                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                    <BsFillShieldLockFill />
+                                </span>
+                                <input type={mostrarContrasenia ? 'text' : 'password'} id="contrasenia" name="contrasenia" value={contrasenia}
+                                    onChange={(e) => { setContrasenia(e.target.value); const erro = Validaciones_Contras(e.target.value); setErrorText(erro); }} required
+                                    className="flex-1 block w-full rounded-none  sm:text-sm border-gray-300" placeholder='Ingrese una nueva contraseña' />
+                                <button type="button" onClick={toggleMostrarContrasenia} className="rounded-none rounded-r-md border-gray-300"
+                                    style={{ backgroundColor: 'white', color: 'black', border: 'none', cursor: 'pointer' }}>
+                                    {mostrarContrasenia ? (<FontAwesomeIcon icon={faEyeSlash} />) : (<FontAwesomeIcon icon={faEye} />)}
+                                </button>
+                            </div>
+                        </div>
+                        <div className="inputDiv">
+                            <label htmlFor="contrasenia">Confirmar Contraseña:</label>
+                            <div className="mt-1 flex rounded-md shadow-sm">
+                                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                    <BsFillShieldLockFill />
+                                </span>
+                                <input type={mostrarContrasenia2 ? 'text' : 'password'} id="confirmarContrasenia" name="confirmarContrasenia" value={confirmarContrasenia}
+                                    onChange={(e) => { setConfirmarContrasenia(e.target.value); setErrorTextConfirmacion(''); }} required
+                                    className="flex-1 block w-full rounded-none  sm:text-sm border-gray-300" placeholder='Confirma la contraseña' />
+                                <button type="button" onClick={toggleMostrarContrasenia2} className="rounded-none rounded-r-md border-gray-300"
+                                    style={{ backgroundColor: 'white', color: 'black', border: 'none', cursor: 'pointer' }}>
+                                    {mostrarContrasenia2 ? (<FontAwesomeIcon icon={faEyeSlash} />) : (<FontAwesomeIcon icon={faEye} />)}
+                                </button>
+                            </div>
+                        </div>
 
-                    <div className="button-group" style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Link to='/Login' type="button" className="secondary" style={{ marginRight: '10px' }}>Atras</Link>
-                        <button type="submit" className="btn btn-lg btn-primary btn-block" 
-                        style={{ backgroundColor: 'var(--first-color)', borderColor: 'transparent', color: '#fff', padding: '10px 20px', borderRadius: '4px', fontSize: '16px', fontWeight: 'bold' }}
-                        onMouseOver={(event) => { event.target.style.backgroundColor = 'black';}}
-                        onMouseOut={(event) => { event.target.style.backgroundColor = 'var(--first-color)';}}
-                        >
-                        Actualizar Contraseña
-                        </button>
-                    </div>
-                </form>
+                        <div className="mt-6 text-center">
+                            <button type="submit" class="btnLogin2 flex">Actualizar Contraseña</button>
+                        </div>
+                        <div className="">
+                            <Link to={'/Login'}>
+                                <button class="btn1">Atras</button>
+                            </Link>
+                        </div>
+
+
+                    </form>
 
                 </div>
             </div>

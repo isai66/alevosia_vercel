@@ -12,7 +12,7 @@ const Producto1 = () =>{
     const [isFocused, setIsFocused] = useState(false);
 
     useEffect(()=>{
-        Axios.get("https://alev-backend-vercel.vercel.app/producto").then((response)=>{
+        Axios.get("http://localhost:3001/producto").then((response)=>{
             setProducto(response.data[0]);
         })
         .catch(error => {

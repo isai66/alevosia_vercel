@@ -1,40 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaUserShield } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
+import { FaUserShield, FaUser, FaPhoneAlt } from "react-icons/fa";
 import { BsFillShieldLockFill } from "react-icons/bs";
-import { AiOutlineSwapRight } from "react-icons/ai";
 import { MdMarkEmailRead } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
-import { FaPhoneAlt } from "react-icons/fa";
-import { message } from 'antd';
+import { AiOutlineSwapRight } from "react-icons/ai";
+import { Modal, Button, message } from 'antd';
 import "../css/signup.css";
 
-const Signup = () => {
-
-
-    const [nombre,setNombre]=useState("");
-    const [apellido,setApellido]=useState("");
-    const [codigoPostal,setCP]=useState("");
-    const [estado,setEstado]=useState("");
-    const [municipio,setMunicipio]=useState("");
+const EditProfile = () => {
+    const [nombre, setNombre] = useState("");
+    const [apellido, setApellido] = useState("");
+    const [codigoPostal, setCP] = useState("");
+    const [estado, setEstado] = useState("");
+    const [municipio, setMunicipio] = useState("");
     const [colonias, setColonias] = useState([]);
-    const [colonia,setColonia]=useState("");
-    const [calle,setCalle]=useState("");
-    const [numint,setNumInt]=useState("");
-    const [numext,setNumExt]=useState("");
-    const [telefono,setTelefono]=useState("");
-    const [usuario,setUsuario]=useState("");
-    const [correo,setCorreo]=useState("");
-    const [contrasena,setContrasena]=useState("");
-    const [error, setError] = useState("");
+    const [colonia, setColonia] = useState("");
+    const [calle, setCalle] = useState("");
+    const [numint, setNumInt] = useState("");
+    const [numext, setNumExt] = useState("");
+    const [telefono, setTelefono] = useState("");
+    const [usuario, setUsuario] = useState("");
+    const [correo, setCorreo] = useState("");
+    const [contrasena, setContrasena] = useState("");
     const [errors, setErrors] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const navigateTo = useNavigate()
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    
+    const idUser = localStorage.getItem('id_usuario')
+    
+    const navigate = useNavigate();
 
     useEffect(() => {
+        // Aquí cargarías los datos del usuario actual desde la API
+        Axios.get(`http://localhost:3001/getUserData/${idUser}`)
+            .then(response => {
+                const userData = response.data;
+                setNombre(userData.nombre);
+                setApellido(userData.apellido);
+                setCP(userData.codigopostal);
+                setEstado(userData.estado);
+                setMunicipio(userData.municipio);
+                setColonias([userData.colonia]);
+                setColonia(userData.colonia);
+                setCalle(userData.calle);
+                setNumInt(userData.numinterior);
+                setNumExt(userData.numexterior);
+                setTelefono(userData.telefono);
+                setUsuario(userData.username);
+                setCorreo(userData.email);
+            })
+            .catch(error => {
+                console.error("Error fetching user data: ", error);
+            });
+    }, []);
+
+     useEffect(() => {
         if (codigoPostal.length === 5) {
             Axios.get(`http://localhost:3001/codigo_postal?cp=${codigoPostal}`)
                 .then(response => {
@@ -76,30 +98,13 @@ const Signup = () => {
     return Object.keys(newErrors).length === 0;
     };
 
-    const checkUserExists = (usuario) => {
-        return Axios.get(`http://localhost:3001/usuarioExiste?usuario=${usuario}`)
-            .then(response => response.data.exists)
-            .catch(error => {
-                console.error("Error checking user existence: ", error);
-                return false;
-            });
-    };
-
-    const createUser = async (e)=>{
-        e.preventDefault()
-
+    const updateUser = (e) => {
+        e.preventDefault();
         if (!validateFields()) return;
 
-        setError("");
+        setIsSubmitting(true);
 
-        const userExists = await checkUserExists(usuario);
-
-        if (userExists) {
-            setError("Este usuario no está disponible.");
-            setIsSubmitting(false);
-            return;
-        }
-        Axios.post("http://localhost:3001/signup",{
+        Axios.put(`http://localhost:3001/updateUser/${idUser}`, {
             usuario:usuario,
             nombre:nombre,
             apellido:apellido,
@@ -113,42 +118,45 @@ const Signup = () => {
             contrasena:contrasena,
             correo:correo,
             telefono:telefono
-        }).then(()=>{
-            message.success('Usuario registrado exitosamente.');
-            navigateTo('/login')
-            setNombre('')
-            setApellido('')
-            setCP('')
-            setEstado('')
-            setMunicipio('')
-            setColonias([])
-            setColonia('')
-            setCalle('')
-            setNumInt('')
-            setNumExt('')
-            setTelefono('')
-            setUsuario('')
-            setCorreo('')
-            setContrasena('')
+        }).then(() => {
+            message.success('Usuario actualizado exitosamente.');
+            navigate('/Dashboard');
         }).catch(error => {
-            console.error("Error registering user: ", error);
-            setError("Error al registrar el usuario.");
+            console.error("Error updating user: ", error);
         }).finally(() => {
             setIsSubmitting(false);
         });
-    }
-    
-    return(
-        <div class="signupPage">
-            <div class='containersignup'>
-                <div class='title'>
-                    <h2>Registrate</h2>
+    };
+
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        // Aquí harías la solicitud para eliminar la cuenta
+        Axios.delete(`http://localhost:3001/deleteUser/${idUser}`)
+            .then(() => {
+                message.success('Usuario eliminado exitosamente.');
+                navigate('/signup');
+            })
+            .catch(error => {
+                console.error("Error deleting user: ", error);
+            });
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
+    return (
+        <div className="signupPage">
+            <div className='containersignup'>
+                <div className='title'>
+                    <h2>Edita tu Perfil</h2>
                 </div>
-                <div class=''>
-                        <h3>Déjanos conocerte</h3>
-                    <form action='' class="formsignup grid" id='formulario'>
-                        
-                        <div class='inputDiv'>
+                <form onSubmit={updateUser} className="formsignup grid">
+                <div class='inputDiv'>
                             <label htmlFor='nombre'>Nombre: </label>
                             <div className="mt-1 flex rounded-md shadow-sm">
                             <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
@@ -176,8 +184,8 @@ const Signup = () => {
                             <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                 <IoHome class='icon'/>
                                 </span>
-                                <input type="number" id='codigopostal' placeholder='Ingrese su Código Postal' value={codigoPostal} onChange={(event) => setCP(event.target.value)} className="flex-1 block rounded-none rounded-r-md border-gray-300"/>
-                            </div>
+                                <input type="text" id='codigopostal' placeholder='Ingrese su Código Postal' value={codigoPostal} onChange={(event) => setCP(event.target.value)} className="flex-1 block rounded-none rounded-r-md border-gray-300"/>
+                                </div>
                             {errors.codigoPostal && <p className="text-red-500 text-sm mt-2">{errors.codigoPostal}</p>}
                         </div>
 
@@ -207,12 +215,13 @@ const Signup = () => {
                             <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                 <IoHome class='icon'/>
                                 </span>
-                                <select class="colonia" id="colonia" required onChange={(event)=>{setColonia(event.target.value)}} className="flex-1 block rounded-none rounded-r-md border-gray-300 selectBox">
-                                    <option value="">Seleccionar Colonia</option>
-                                    {colonias.map((col, index) => (
-                                        <option key={index} value={col}>{col}</option>
-                                    ))}
-                                </select>
+                                <select id="colonia" required value={colonia} onChange={(event) => setColonia(event.target.value)} className="flex-1 block rounded-none rounded-r-md border-gray-300 selectBox">
+    <option value="">Seleccionar Colonia</option>
+    {colonias.map((col, index) => (
+        <option key={index} value={col}>{col}</option>
+    ))}
+</select>
+
                             </div>
                         </div>
 
@@ -268,12 +277,7 @@ const Signup = () => {
                                 </span>
                                 <input type="text" id='username' placeholder='Ingrese su nombre de usuario' value={usuario} onChange={(event)=>{setUsuario(event.target.value)}} className="flex-1 block rounded-none rounded-r-md border-gray-300"/>
                             </div>
-                            {/* Display error message if any */}
-                        {error && (
-                            <div className="text-red-500 text-sm mt-2">
-                                {error}
-                            </div>
-                        )} 
+                            
                         {errors.usuario && <p className="text-red-500 text-sm mt-2">{errors.usuario}</p>}  
                         </div>
                                        
@@ -300,54 +304,23 @@ const Signup = () => {
                             {errors.contrasena && <p className="text-red-500 text-sm mt-2">{errors.contrasena}</p>}
 
                         </div>
+                    
+                    <button type='submit' className='btnSignup flex'>
+                        <span className="submitText">Guardar Cambios</span>
+                        <AiOutlineSwapRight className='iconbtn'></AiOutlineSwapRight>
+                    </button>
+                </form>
 
-                        <button type='submit' class='btnSignup flex' onClick={createUser}>
-                            <span class="submitText">Registrarse</span>
-                            <AiOutlineSwapRight class='iconbtn'></AiOutlineSwapRight>
-                        </button>
-                    </form>
-                    <div className="mt-6 text-center">
-                            {/* <span class='forgotPswd'>¿Olvidaste tu contraseña?</span> */}
-                            <span class='text'>¿Ya tienes una cuenta?</span>
-                            <Link to={'/login'}>
-                                <button class="btn1">Inicia Sesión</button>
-                            </Link>
-                    </div>
-                </div>
+                <Button type="danger" onClick={showModal} className="mt-4">
+                    Eliminar Cuenta
+                </Button>
+                
+                <Modal title="Confirmar Eliminación" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                    <p>¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+                </Modal>
             </div>
         </div>
     );
 };
 
-export default Signup;
-
-/*
-const [data, setData] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try 
-            {
-                const response = await axios.get("http://localhost:3001/usuarios");
-                setData(response.data);
-            } 
-            catch (error)
-            {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
-    },[]);
-
-    return (
-        <div>
-            <h1>Data from API:</h1>
-            <ul>
-                {data.map((item, index) => (
-                    <li key={index}>{item.nombre}</li> // Suponiendo que "nombre" es un campo en tu tabla MySQL
-                ))}
-            </ul>
-        </div>
-    )
-
-*/
+export default EditProfile;

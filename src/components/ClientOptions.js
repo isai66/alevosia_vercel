@@ -8,8 +8,8 @@ const ClientOptions = () => {
       <h2 className="text-2xl font-semibold text-center mb-4">Opciones de cliente</h2>
       <div class="adminclientnav">
         <ul>
-          <li>Ver Perfil</li>
-          <li>Historial de Compras</li>
+        <li><Link to="EditProfile">Editar Mi Perfil</Link></li>
+        {  /*<li>Historial de Compras</li>*/}
         </ul>
       </div>
     </div>

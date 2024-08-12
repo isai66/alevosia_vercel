@@ -8,11 +8,10 @@ const AdminOptions = () => {
       <h2 className="text-2xl font-semibold text-center mb-4">Opciones de administrador</h2>
       <div class="adminclientnav">
       <ul>
-        <li>Administrar Usuarios</li>
-        <li>Configuración del Sistema</li>
-        <li><Link to="/Alta">Subir Nuevos Productos</Link></li>
+        <li><Link to="AdminProfile">Administrar Usuarios</Link></li>
+        <li><Link to="UsersProfile">Administrar Empleados</Link></li>
+        <li><Link to="/Alta">Subir Productos</Link></li>
         <li><Link to="/Registro2">Bitacora de registros y logins</Link></li>
-        <li>Colecciones</li>
       </ul>
       </div>
     </div>

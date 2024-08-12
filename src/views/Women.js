@@ -12,8 +12,8 @@ import { useAuth } from '../components/authUser';
 
 
 
-const TraerProductos = () => axios.get('https://alev-backend-vercel.vercel.app/mujeres')
-const InsertarCarrito = prodicto => axios.post('https://alev-backend-vercel.vercel.app/InsertarCarro', prodicto)
+const TraerProductos = () => axios.get('http://localhost:3001/mujeres')
+const InsertarCarrito = prodicto => axios.post('http://localhost:3001/InsertarCarro', prodicto)
 const idUser = localStorage.getItem('id_usuario')
 const Women = () =>{
     const { isAuthenticated, userData } = useAuth();

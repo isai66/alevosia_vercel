@@ -14,7 +14,7 @@ const DataCarrito = ({children}) => {
     
 
     useEffect(()=>{
-        Axios.get("https://alev-backend-vercel.vercel.app/consultaCarritoUsuario").then((response)=>{
+        Axios.get("http://localhost:3001/consultaCarritoUsuario").then((response)=>{
             setData(response.data);
         })
         .catch(error => {

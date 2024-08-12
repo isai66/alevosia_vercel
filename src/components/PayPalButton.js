@@ -30,16 +30,11 @@ function PayPalButton({ total }) {
               id_usuario : idUser,
               total: total
             }
-            axios.post('https://alev-backend-vercel.vercel.app/compra', datos)
-            .then(response => {
-            message.success('Compra realizada con éxito', details.payer.name.given_name);
+            axios.post('http://localhost:3001/compra', datos)
+            message.success('Compra realizada con exito', details.payer.name.given_name);
+            // alert('Transaction completed by ' + details.payer.name.given_name);
             refreshPage();
-            })
-            .catch(error => {
-            console.error('Error al realizar la compra:', error);
-            message.error('Error al realizar la compra. Por favor, intente nuevamente.');
-            });
-            });
+          });
         }}
         
       />
