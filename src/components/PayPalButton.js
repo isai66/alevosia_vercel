@@ -30,7 +30,7 @@ function PayPalButton({ total }) {
               id_usuario : idUser,
               total: total
             }
-            axios.post('http://localhost:3001/compra', datos)
+            axios.post('https://alev-backend-vercel.vercel.app/compra', datos)
             message.success('Compra realizada con exito', details.payer.name.given_name);
             // alert('Transaction completed by ' + details.payer.name.given_name);
             refreshPage();
