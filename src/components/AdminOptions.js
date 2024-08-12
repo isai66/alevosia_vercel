@@ -12,6 +12,7 @@ const AdminOptions = () => {
         <li><Link to="UsersProfile">Administrar Empleados</Link></li>
         <li><Link to="/Alta">Subir Productos</Link></li>
         <li><Link to="/Registro2">Bitacora de registros y logins</Link></li>
+        <li><Link to="EditProfileAdmin">Editar Mi Perfil</Link></li>
       </ul>
       </div>
     </div>
