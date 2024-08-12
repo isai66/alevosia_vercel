@@ -28,6 +28,7 @@ import AdminProfile from './components/AdminProfile';
 import UsersProfile from './components/UsersProfile';
 import Registro2 from './views/Registro2';
 import EditProfile from './views/EditProfile';
+import EditProfileAdmin from './views/EditProfileAdmin';
 function App() {
 
   return (
@@ -63,6 +64,7 @@ function App() {
             <Route path="Dashboard/AdminProfile" element={<AdminProfile/>}/>
             <Route path="Dashboard/UsersProfile" element={<UsersProfile/>}/>
             <Route path="Dashboard/EditProfile" element={<PrivateRouteUser><EditProfile/></PrivateRouteUser>}/>
+            <Route path="Dashboard/EditProfileAdmin" element={<PrivateRoute><EditProfileAdmin/></PrivateRoute>}/>
 
       
             <Route path='*' element={<NotFound/>}/>
