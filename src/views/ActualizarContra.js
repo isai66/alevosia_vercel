@@ -77,7 +77,7 @@ const ActualizarContra = () => {
         try {
             console.log(datos);
             //const response = await fetch('https://telesecundaria763.host8b.me/Web_Services/TeleSecundaria763/actualizarContraChay.php', {
-            const response = await fetch('http://localhost/webservice_alevosia/actualizarContraChay.php', {
+            const response = await fetch('https://alevosia.host8b.me/Web_Services/actualizarContraChay.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
