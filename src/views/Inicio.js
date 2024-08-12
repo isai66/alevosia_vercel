@@ -74,7 +74,7 @@ const Inicio = () => {
                         {randomProducts.map((product) => (
                             <div className="tarjeta" key={product.ID_Prenda}>
                             <img
-                                src={`/image/${product.Imagen}`}
+                                src={`https://alevosia.host8b.me/image/${product.Imagen}`}
                                 alt={product.Nombre}
                                 className="imagen-producto"
                             />
