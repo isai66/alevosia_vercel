@@ -6,11 +6,11 @@ import { CardTitle } from "react-bootstrap";
 import { message, Modal } from 'antd';
 
 
-const MasRoute = carrito => axios.post('http://localhost:3001/AumentarCarro', carrito)
+const MasRoute = carrito => axios.post('https://alev-backend-vercel.vercel.app/AumentarCarro', carrito)
 
-const MenosRoute = carrito => axios.post('http://localhost:3001/QuirtarCarro', carrito)
+const MenosRoute = carrito => axios.post('https://alev-backend-vercel.vercel.app/QuirtarCarro', carrito)
 
-const EliminarRoute = carrito => axios.post('http://localhost:3001/EliminarCarro', carrito)
+const EliminarRoute = carrito => axios.post('https://alev-backend-vercel.vercel.app/EliminarCarro', carrito)
 
 const CartContent = () => {
   const [cart, setCart] = useState([]);
@@ -23,7 +23,7 @@ const CartContent = () => {
   },[])
 
   const fetchData = async () => {
-    const response = await axios.get(`http://localhost:3001/TraerCarrito/${idUser}`)
+    const response = await axios.get(`https://alev-backend-vercel.vercel.app/TraerCarrito/${idUser}`)
     setCart(response.data)
     console.log(response.data)
     calculateTotal(response.data);
@@ -79,7 +79,7 @@ const CartContent = () => {
       id_usuario : idUser,
       total : total
     }
-    axios.post('http://localhost:3001/compra', datos)
+    axios.post('https://alev-backend-vercel.vercel.app/compra', datos)
     .then(() => {
       fetchData(); // Actualizar datos del carrito después de completar la compra
     })
