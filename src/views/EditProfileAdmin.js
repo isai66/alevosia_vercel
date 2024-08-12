@@ -34,7 +34,7 @@ const EditProfileAdmin = () => {
 
     useEffect(() => {
         // Aquí cargarías los datos del usuario actual desde la API
-        Axios.get(`http://localhost:3001/getAdminData/${idUser}`)
+        Axios.get(`https://alev-backend-vercel.vercel.app/getAdminData/${idUser}`)
             .then(response => {
                 const userData = response.data;
                 setNombre(userData.nombre);
@@ -59,7 +59,7 @@ const EditProfileAdmin = () => {
 
      useEffect(() => {
         if (codigoPostal.length === 5) {
-            Axios.get(`http://localhost:3001/codigo_postal?cp=${codigoPostal}`)
+            Axios.get(`https://alev-backend-vercel.vercel.app/codigo_postal?cp=${codigoPostal}`)
                 .then(response => {
                     const data = response.data;
                     console.log(data.codigo_postal)
@@ -105,7 +105,7 @@ const EditProfileAdmin = () => {
 
         setIsSubmitting(true);
 
-        Axios.put(`http://localhost:3001/updateAdmin/${idUser}`, {
+        Axios.put(`https://alev-backend-vercel.vercel.app/updateAdmin/${idUser}`, {
             usuario:usuario,
             nombre:nombre,
             apellido:apellido,
@@ -135,7 +135,7 @@ const EditProfileAdmin = () => {
 
     const handleOk = () => {
         // Aquí harías la solicitud para eliminar la cuenta
-        Axios.delete(`http://localhost:3001/deleteAdmin/${idUser}`)
+        Axios.delete(`https://alev-backend-vercel.vercel.app/deleteAdmin/${idUser}`)
             .then(() => {
                 message.success('Usuario eliminado exitosamente.');
                 navigate('/signup');
