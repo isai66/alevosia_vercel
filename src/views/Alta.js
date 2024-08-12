@@ -350,7 +350,7 @@ const handleFileChange = (event) => {
     }
   }
 };
-const urlImage='../image/'
+const urlImage='https://alevosia.host8b.me/image/'
 
   return (
     <div className="flex-grow bg-gray-100">
@@ -566,7 +566,7 @@ const urlImage='../image/'
                           {products.map((product) => (
                               <div className="tarjeta" key={product.ID_Prenda}>
                               <img
-                                  src={`../image/${product.Imagen}`}
+                                  src={`https://alevosia.host8b.me/image/${product.Imagen}`}
                                   alt={product.Nombre}
                                   className="imagen-producto"
                               />
