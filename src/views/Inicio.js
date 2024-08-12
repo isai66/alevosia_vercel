@@ -15,8 +15,8 @@ import BreadCrumb from '../components/BreadCrumb';
 import ReactDOM from 'react-dom';
 import Carousel from '../components/Carousel';
 
-const TraerProductos = () => axios.get('http://localhost:3001/productosGeneral')
-const InsertarCarrito = prodicto => axios.post('http://localhost:3001/InsertarCarro', prodicto)
+const TraerProductos = () => axios.get('https://alev-backend-vercel.vercel.app/productosGeneral')
+const InsertarCarrito = prodicto => axios.post('https://alev-backend-vercel.vercel.app/InsertarCarro', prodicto)
 const idUser = localStorage.getItem('id_usuario')
 
 const Inicio = () => {
