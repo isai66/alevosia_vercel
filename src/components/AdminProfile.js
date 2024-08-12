@@ -13,7 +13,7 @@ const AdminProfile = () => {
     // Fetch users from the server
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/usersAdmin'); // Adjust the URL as needed
+        const response = await axios.get('https://alev-backend-vercel.vercel.app/usersAdmin'); // Adjust the URL as needed
         setUsers(response.data);
         setFilteredUsers(response.data);
       } catch (error) {
@@ -120,7 +120,7 @@ const AdminProfile = () => {
 
 const handleConvertToEmployee = async (userId) => {
   try {
-    await axios.post(`http://localhost:3001/convertToEmployee/${userId}`);
+    await axios.post(`https://alev-backend-vercel.vercel.app/convertToEmployee/${userId}`);
     alert('Usuario convertido a empleado.');
     // Optionally, you can refresh the user list here
   } catch (error) {
