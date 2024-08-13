@@ -97,7 +97,7 @@ const Plantilla = props =>{
         </footer>*/}
         <footer class="pie-pagina">
           <div>
-            <a href="docs/AVISO_PRIVACIDAD_ALEVOSIA_15-NOV-2023.pdf">Politica de privacidad</a>
+            <Link to='avisoPriv'>Politica de privacidad</Link>
             <div class="red-social">
               <a href="https://facebook.com/Alevosiaboutique"><FaFacebook/></a>
               <a href="https://www.instagram.com/alevosia.boutique/" ><FaInstagram/></a>

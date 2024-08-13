@@ -72,6 +72,15 @@ code {
   max-width: none;
 }
 
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 350pt; /* O establece una altura fija si prefieres */
+  border: 1px solid #ccc;
+}
+
+
 .usersvg{
   height: 20pt;
 }
@@ -187,6 +196,20 @@ li a.active, li a:hover{
   justify-content: flex-start;
   padding: 0% 17% 3% 17%;
   padding-top: 2%;
+}
+.detalles2{
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0% 17% 1% 17%;
+  padding-top: 2%;
+}
+.detalles3{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  text-align: left;
+  padding: 0% 17% 0% 17%;
 }
 .somos{
   display: flex; justify-content: center; padding-top: 2%;

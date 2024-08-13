@@ -29,6 +29,9 @@ import UsersProfile from './components/UsersProfile';
 import Registro2 from './views/Registro2';
 import EditProfile from './views/EditProfile';
 import EditProfileAdmin from './views/EditProfileAdmin';
+import AvisoPriv from './views/avisoPriv';
+import Signup3 from './views/Signup3';
+
 function App() {
 
   return (
@@ -50,6 +53,7 @@ function App() {
             <Route path="Signup" element={<Signup/>}/>
             <Route path="Login" element={<Login2/>}/>
             <Route path="Registro2" element={<Registro2/>}/>
+            <Route path="avisoPriv" element={<AvisoPriv/>}/>
 
             <Route path="Dashboard" element={<PrivateRouteUser><Dashboard/></PrivateRouteUser>}/>
 

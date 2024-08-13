@@ -9,6 +9,8 @@ import { MdMarkEmailRead } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { message } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import "../css/signup.css";
 
 const Signup = () => {
@@ -31,6 +33,7 @@ const Signup = () => {
     const [error, setError] = useState("");
     const [errors, setErrors] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
 
     const navigateTo = useNavigate()
 
@@ -54,12 +57,33 @@ const Signup = () => {
         }
     }, [codigoPostal]);
 
+    const validatePassword = (password) => {
+        const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        return regexPassword.test(password);
+    };
+
+    const handlePasswordChange = (event) => {
+        const newPassword = event.target.value;
+        setContrasena(newPassword);
+
+        if (!validatePassword(newPassword)) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                contrasena: "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial."
+            }));
+        } else {
+            setErrors(prevErrors => {
+                const { contrasena, ...rest } = prevErrors;
+                return rest;
+            });
+        }
+    };
+
     const validateFields = () => {
         const newErrors = {};
         const regexLetters = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/;
         const regexUsername = /^[a-zA-Z0-9!#$%^&*()_=\[\]{};:'"<>\/\\|`~]+$/;
         const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
         if (!regexLetters.test(nombre)) newErrors.nombre = "El nombre solo puede contener letras y no estar vacio.";
         if (!regexLetters.test(apellido)) newErrors.apellido = "El apellido solo puede contener letras y no estar vacio.";
@@ -70,11 +94,12 @@ const Signup = () => {
         if (telefono.length !== 10 || isNaN(telefono) || parseInt(telefono) < 0) newErrors.telefono = "El teléfono debe tener 10 caracteres y no puede ser negativo.";
         if (!regexUsername.test(usuario)) newErrors.usuario = "El usuario solo puede contener letras, números y algunos caracteres especiales como guión bajo.";
         if (!regexEmail.test(correo)) newErrors.correo = "El correo no tiene un formato válido.";
-        if (!regexPassword.test(contrasena)) newErrors.contrasena = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
+        if (!validatePassword(contrasena)) newErrors.contrasena = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
 
         setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
     };
+
 
     const checkUserExists = (usuario) => {
         return Axios.get(`https://alev-backend-vercel.vercel.app/usuarioExiste?usuario=${usuario}`)
@@ -137,6 +162,9 @@ const Signup = () => {
             setIsSubmitting(false);
         });
     }
+    const toggleMostrarContrasenia = () => {
+        setMostrarContrasenia(!mostrarContrasenia);
+    };
     
     return(
         <div class="signupPage">
@@ -295,7 +323,11 @@ const Signup = () => {
                             <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                 <BsFillShieldLockFill class='icon'/>
                             </span>
-                                <input type="password" id='password' placeholder='Ingrese su contraseña' value={contrasena} onChange={(event)=>{setContrasena(event.target.value)}} className="flex-1 block rounded-none rounded-r-md border-gray-300"/>
+                                <input type={mostrarContrasenia ? 'text' : 'password'} id='password' placeholder='Ingrese su contraseña' value={contrasena} onChange={handlePasswordChange} className="flex-1 block rounded-none rounded-r-md border-gray-300"/>
+                                <button type="button" onClick={toggleMostrarContrasenia} className="rounded-none rounded-r-md border-gray-300"
+                                    style={{ backgroundColor: 'white', color: 'black', border: 'none', cursor: 'pointer' }}>
+                                    {mostrarContrasenia ? (<FontAwesomeIcon icon={faEyeSlash} />) : (<FontAwesomeIcon icon={faEye} />)}
+                                </button>
                             </div>
                             {errors.contrasena && <p className="text-red-500 text-sm mt-2">{errors.contrasena}</p>}
 

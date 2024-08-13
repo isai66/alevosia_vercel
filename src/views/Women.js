@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import BreadCrumb from '../components/BreadCrumb';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { message, Modal } from 'antd';
+import { message, Modal, Pagination } from 'antd';
 import { useAuth } from '../components/authUser'; 
 
 
@@ -19,6 +19,8 @@ const Women = () =>{
     const { isAuthenticated, userData } = useAuth();
 
     const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 6;
     
     useEffect(()=>{
         async function fetchData(){
@@ -37,6 +39,13 @@ const Women = () =>{
         message.success('Se agrego al carrito');
         console.log(aa.data)
     }
+    // Obtener los productos para la página actual
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    // Cambiar de página
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     
     return (
         <div class="body">
@@ -44,7 +53,7 @@ const Women = () =>{
                 <div className='cccc' >
                     <BreadCrumb/>
                     <div className="productos-container">
-                        {products.map((product) => (
+                        {currentProducts.map((product) => (
                             <div className="tarjeta" key={product.ID_Prenda}>
                             <img
                                 src={`https://alevosia.host8b.me/image/${product.Imagen}`}
@@ -60,6 +69,12 @@ const Women = () =>{
                             </div>
                         ))}
                     </div>
+                    <Pagination
+                        current={currentPage}
+                        pageSize={productsPerPage}
+                        total={products.length}
+                        onChange={paginate}
+                    />
                 </div>
             </div>
         </div>
