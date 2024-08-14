@@ -338,15 +338,19 @@ const handleFileChange = (event) => {
 };*/
 const [selectedFile, setSelectedFile] = useState(null);
 const [error, setError] = useState('');
+const [success, setSuccess] = useState('');
+
 
 const handleFileChange = (event) => {
   const file = event.target.files[0];
   if (file) {
     if (!file.type.startsWith('image/')) {
       setError('Solo se permiten imágenes (JPEG, PNG, GIF)');
+      setSuccess('');
     } else {
       setSelectedFile(file);
       setError('');
+      setSuccess('Imagen cargada correctamente.');
     }
   }
 };
@@ -518,7 +522,8 @@ const urlImage='https://alevosia.host8b.me/image/'
                             required
                           />
                         </Label>
-                        {error && <p>{error}</p>}
+                        {error && <p className="text-red-500">{error}</p>}
+                            {success && <p className="text-green-500">{success}</p>}
                       </div>
                     </section>
                   </Modal.Body>
@@ -536,29 +541,7 @@ const urlImage='https://alevosia.host8b.me/image/'
                   </form>
                 </Modal>
                 </section>
-                
-                
-        {/*<center>
-        <button onClick={getUsuarios}>Listar</button>
-        <table class="bitacora">
-            <thead>
-                <tr>
-                    <th>Descripcion</th>
-                    <th>Usuario</th>
-                    <th>Hosting</th>
-                </tr>
-            </thead>
-            <tbody>
-                {usuariosList.map((val, key) =>
-                    <tr key={key}>
-                        <td>{val.DatosNuevos}</td>
-                        <td>{val.Usuario}</td>
-                        <td>{val.Hosti}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>
-        </center>*/}
+
               </div>
             </div>
             <div className='cccc'>
