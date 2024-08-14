@@ -98,7 +98,7 @@ const CustomInput = ({ label, name, errors, register, trigger, errorMessage, pat
 
     return (
         <div className="mb-5 relative">
-            <div className="relative">
+            <div className="relative rounded-lg border-2 border-gray-300">
                 <input
                 type='text'
                 id={name}
