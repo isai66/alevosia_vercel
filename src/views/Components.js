@@ -13,6 +13,7 @@ const SelectComponent = ({ label, id, name, onSelectChange, options, ...rest }) 
         <Label htmlFor={id} value={label} />
       </div>
       <Select id={id} required onChange={handleSelectChange} {...rest}>
+      <option value="">Seleccionar...</option>
         {options &&
           options.map((option) => (
             <option key={option[id]} value={option[id]}>
