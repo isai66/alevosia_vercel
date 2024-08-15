@@ -258,6 +258,7 @@ const getTallaName = (tipoDato) => {
 };
 
 const handleDeleteProduct = async (ID_Prenda) => {
+  console.log('ID a eliminar:', ID_Prenda);
   const formData = new FormData();
   formData.append('ID_Prenda', ID_Prenda);
 
@@ -567,7 +568,8 @@ const urlImage='https://alevosia.host8b.me/image/'
             <div className='cccc'>
                   <div className="productos-container">
                           {products.map((product) => (
-                              <div className="tarjeta" key={product.ID_Prenda}>
+                            
+                              <div className="tarjeta" key={product.ID_Prenda} >
                               <img
                                   src={`https://alevosia.host8b.me/image/${product.Imagen}`}
                                   alt={product.Nombre}
@@ -580,6 +582,7 @@ const urlImage='https://alevosia.host8b.me/image/'
                                   
                               </div>
                               <button >Editar</button>
+                              
                               <button onClick={() => handleDeleteProduct(product.ID_Prenda)}>Eliminar</button>
               
                               </div>
