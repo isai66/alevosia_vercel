@@ -275,13 +275,21 @@ const handleDeleteProduct = async (ID_Prenda) => {
   }
 };
 
+const [isEditMode, setIsEditMode] = useState(false);
+const [editProductData, setEditProductData] = useState(null);
+
+const handleEditProduct = (product) => {
+  setIsEditMode(true);
+  setEditProductData(product);
+  setOpenModal(true); // Asumiendo que tienes un estado para controlar la visibilidad del modal
+};
 
 
 
 const onSubmit = async (data, event) => {
   event.preventDefault(); // Evitar el comportamiento predeterminado de envío del formulario
   console.log('Formulario enviado:', {data});
-  console.log('imagen enviado:', {selectedFile});
+  console.log('Imagen enviada:', {selectedFile});
 
   try {
     setIsLoading(true); // Establecer isLoading a true para mostrar una carga en progreso
@@ -300,47 +308,71 @@ const onSubmit = async (data, event) => {
     formData.append('idTallaPlayera', idTalla);
     formData.append('idEstilo', idEstilo);
 
+    if (isEditMode) {
+      // Agregar el ID del producto si estamos en modo edición
+      formData.append('ID_Prenda', editProductData.ID_Prenda);
 
-    const datos = {
-      codBarras: data.codBarras,
-      descProducto: data.descProducto,
-      nombreProducto: data.nombreProducto,
-      precioProd: data.precioProducto,
-      image: selectedFile,
-      idMarca: idMarca,
-      idColor: idColor,
-      idTipo: tipoDato,
-      idCategoria: idCategoria,
-      idTallaPantalon: idTalla,
-      idTallaPlayera: idTalla,
-      idEstilo: idEstilo,    
-    }
+      // Realizar la solicitud de actualización
+      const response = await fetch('https://alevosia.host8b.me/Web_Services/edit.php', {
+        method: 'POST',
+        body: formData,
+      });
 
-    console.log(datos);
-    const response = await fetch('https://alevosia.host8b.me/Web_Services/upload.php', {
-      method: 'POST',
-      body: formData,
-    });
+      const result = await response.json();
 
-    const result = await response.json();
-
-    if (result.done) {
-      console.log('Registro exitoso:', result);
-      // Realiza alguna acción adicional después de un registro exitoso, si es necesario
+      if (result.done) {
+        const refreshPage = () => {
+          window.location.reload();
+        }
+        console.log('Actualización exitosa:', result);
+        // Realiza alguna acción adicional después de una actualización exitosa, si es necesario
+      } else {
+        console.error('Error en la actualización:', result.message);
+        console.log(editProductData.ID_Prenda)
+        if (result.debug_info) {
+          console.error('Información de depuración:', result.debug_info);
+        }
+        if (result.errors) {
+          result.errors.forEach(error => {
+            console.error('Error específico:', error);
+          });
+        }
+        setServerErrorMessage(result.message || 'Error en el servidor.');
+      }
     } else {
-      console.error('Error en el registro:', result.message);
+      // Realizar la solicitud de creación
+      const response = await fetch('https://alevosia.host8b.me/Web_Services/upload.php', {
+        method: 'POST',
+        body: formData,
+      });
 
-      if (result.debug_info) {
-        console.error('Información de depuración:', result.debug_info);
+      const result = await response.json();
+
+      if (result.done) {
+        const refreshPage = () => {
+          window.location.reload();
+        }
+        refreshPage();
+        console.log('Registro exitoso:', result);
+        // Realiza alguna acción adicional después de un registro exitoso, si es necesario
+      } else {
+        console.error('Error en el registro:', result.message);
+        if (result.debug_info) {
+          console.error('Información de depuración:', result.debug_info);
+        }
+        if (result.errors) {
+          result.errors.forEach(error => {
+            console.error('Error específico:', error);
+          });
+        }
+        setServerErrorMessage(result.message || 'Error en el servidor.');
       }
-      if (result.errors) {
-        result.errors.forEach(error => {
-          console.error('Error específico:', error);
-        });
-      }
-      setServerErrorMessage(result.message || 'Error en el servidor.');
     }
   } catch (error) {
+    const refreshPage = () => {
+      window.location.reload();
+    }
+    refreshPage();
     console.error('Error en la solicitud:', error);
     // Manejar errores de red u otros errores durante la solicitud
     setTimeout(() => {
@@ -351,6 +383,7 @@ const onSubmit = async (data, event) => {
     setIsLoading(false); // Establecer isLoading de nuevo a false después de manejar la solicitud
   }
 };
+
 /*
 const handleFileChange = (event) => {
   if (event.target.files && event.target.files.length > 0) {
@@ -581,8 +614,7 @@ const urlImage='https://alevosia.host8b.me/image/'
                                   <p className="precio">${product.Precio}</p>
                                   
                               </div>
-                              <button >Editar</button>
-                              
+                              <button onClick={() => handleEditProduct(product)}>Editar</button>                              
                               <button onClick={() => handleDeleteProduct(product.ID_Prenda)}>Eliminar</button>
               
                               </div>
