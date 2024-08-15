@@ -257,6 +257,26 @@ const getTallaName = (tipoDato) => {
   }
 };
 
+const handleDeleteProduct = async (ID_Prenda) => {
+  const formData = new FormData();
+  formData.append('ID_Prenda', ID_Prenda);
+
+  try {
+    const response = await fetch('https://alevosia.host8b.me/Web_Services/delete.php', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const result = await response.text();
+    alert(result); // Mostrar resultado de la operación
+  } catch (error) {
+    console.error('Error al eliminar el producto:', error);
+  }
+};
+
+
+
+
 const onSubmit = async (data, event) => {
   event.preventDefault(); // Evitar el comportamiento predeterminado de envío del formulario
   console.log('Formulario enviado:', {data});
@@ -559,6 +579,9 @@ const urlImage='https://alevosia.host8b.me/image/'
                                   <p className="precio">${product.Precio}</p>
                                   
                               </div>
+                              <button >Editar</button>
+                              <button onClick={() => handleDeleteProduct(product.ID_Prenda)}>Eliminar</button>
+              
                               </div>
                           ))}
                       </div>
@@ -572,3 +595,4 @@ const urlImage='https://alevosia.host8b.me/image/'
 }
 
 export default App;
+
