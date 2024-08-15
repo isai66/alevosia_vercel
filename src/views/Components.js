@@ -14,6 +14,7 @@ const SelectComponent = ({ label, id, name, onSelectChange, options, ...rest }) 
       </div>
       <Select id={id} required onChange={handleSelectChange} {...rest}>
       <option value="">Seleccionar...</option>
+      <option value=""></option>
         {options &&
           options.map((option) => (
             <option key={option[id]} value={option[id]}>
@@ -69,7 +70,7 @@ const LoadingButton = ({ isLoading, normalLabel, loadingLabel, className, ...res
     return (
         <Button
             type="submit"
-            className={`button w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 ${className}`} // Agregar la clase className aquí
+            className={`button w-full p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 ${className}`} // Agregar la clase className aquí
             disabled={isLoading}
             {...rest}
             >
@@ -99,7 +100,7 @@ const CustomInput = ({ label, name, errors, register, trigger, errorMessage, pat
 
     return (
         <div className="mb-5 relative">
-            <div className="relative rounded-lg border-2 border-gray-300">
+            <div className="relative rounded-lg border-2 border-gray-300 ">
                 <input
                 type='text'
                 id={name}
@@ -198,7 +199,7 @@ const CustomRepeatPassword = ({ label, name, errors, register, trigger, watch, t
                 type={type || 'text'}
                 id={name}
                 aria-describedby={`${name}_help`}
-                className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
+                className={`block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${
                     errors[name]
                     ? 'dark:text-white dark:border-red-500 border-red-600 dark:focus:border-red-500 focus:outline-none focus:border-red-600'
                     : 'dark:text-gray-500 dark:border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600'
