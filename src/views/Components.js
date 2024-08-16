@@ -14,7 +14,6 @@ const SelectComponent = ({ label, id, name, onSelectChange, options, ...rest }) 
       </div>
       <Select id={id} required onChange={handleSelectChange} {...rest}>
       <option value="">Seleccionar...</option>
-      <option value=""></option>
         {options &&
           options.map((option) => (
             <option key={option[id]} value={option[id]}>
