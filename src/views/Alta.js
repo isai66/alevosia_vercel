@@ -38,6 +38,7 @@ function App() {
     handleSubmit,
     watch,
     trigger,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -275,9 +276,23 @@ function App() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editProductData, setEditProductData] = useState(null);
 
+
   const handleEditProduct = (product) => {
     setIsEditMode(true);
     setEditProductData(product);
+
+    setValue('nombreProducto', product.Nombre);
+  setValue('codBarras', product.CodBarras);
+  setValue('descProducto', product.Descripcion);
+  setValue('precioProducto', product.Precio);
+
+  setidMarca(product.idMarca);
+  setidColor(product.idColor);
+  setidCategoria(product.idCategoria);
+  setidTalla(product.idTallaPantalon || product.idTallaPlayera);
+  setidEstilo(product.idEstilo);
+  setTipoDato(product.tipoDato);
+  
     setOpenModal(true); // Asumiendo que tienes un estado para controlar la visibilidad del modal
   };
 
@@ -420,7 +435,12 @@ function App() {
                 <header>
 
                   <div className="flex justify-center items-center">
-                    <Button className="ml-2" onClick={() => setOpenModal(true)}>
+                    <Button className="ml-2" onClick={() => {
+    setEditProductData(null); // Restablece los datos del formulario a nulo
+    setIsEditMode(false);     // Desactiva el modo de edición
+    setOpenModal(true);       // Abre el modal
+  }}
+>
                       Añadir Productos
                     </Button>
                   </div>
@@ -428,7 +448,7 @@ function App() {
                 <section className=''>
                   <Modal className=' pt-16' size="4xl" base show={openModal} onClose={() => setOpenModal(false)}>
                     <Modal.Header>Agregar Producto</Modal.Header>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} >
 
                       <Modal.Body className='max-h-60'>
 
@@ -441,8 +461,10 @@ function App() {
 
                               errorMessage="Solo letras y sin espacios"
                               errors={errors}
+                              defaultValue={editProductData ? editProductData.Nombre : ''}
                               register={register}
                               trigger={trigger}
+                              
                             />
                             <CustomInput
                               label="Codigo de Barras"
@@ -470,6 +492,7 @@ function App() {
                               errors={errors}
                               register={register}
                               trigger={trigger}
+                              
                             />
                           </div>
 
