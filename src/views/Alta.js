@@ -7,7 +7,7 @@ import '../css/tablas.css'
 import { AuthProvider, useAuth } from '../components/authUser';
 
 import Components from './Components'
-const { TitlePage, ContentTitle, SelectComponent, LoadingButton, CustomInput } = Components;
+const { TitlePage, ContentTitle, SelectComponent, LoadingButton, CustomInput, CustomInput2 } = Components;
 function App() {
   const { isAuthenticated, userData } = useAuth();
 
@@ -426,7 +426,7 @@ function App() {
                   </div>
                 </header>
                 <section className=''>
-                  <Modal className='mt-11 pt-16' size="4xl" base show={openModal} onClose={() => setOpenModal(false)}>
+                  <Modal className=' pt-16' size="4xl" base show={openModal} onClose={() => setOpenModal(false)}>
                     <Modal.Header>Agregar Producto</Modal.Header>
                     <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -453,7 +453,7 @@ function App() {
                               register={register}
                               trigger={trigger}
                             />
-                            <CustomInput
+                            <CustomInput2
                               label="Descripcion"
                               name="descProducto"
                               // pattern={/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]+$/}
