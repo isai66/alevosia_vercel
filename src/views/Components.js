@@ -146,6 +146,58 @@ const CustomInput = ({ label, name, errors, register, trigger, errorMessage, pat
     );
 };
 
+const CustomInput2 = ({ label, name, errors, register, trigger, errorMessage, pattern }) => 
+    {
+        const [inputError, setInputError] = useState(false);
+    
+        return (
+            <div className="mb-5 relative h-24">
+                <div className="relative rounded-lg border-2 border-gray-300 ">
+                    <textarea
+                    type='text'
+                    id={name}
+                    aria-describedby={`${name}_help`}
+                    className=
+                    {`block px-2.5 pb-2.5 pt-4 h-24 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer 
+                        ${
+                            errors[name]
+                            ? 'dark:text-white dark:border-red-500 border-red-600 dark:focus:border-red-500 focus:outline-none focus:border-red-600'
+                            : 'dark:text-gray-500 dark:border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600'
+                        } peer`
+                    }
+                    placeholder=" "
+                    {...register(name, { required: true, pattern: pattern})}
+                    onBlur={() => trigger(name).then((isValid) => setInputError(!isValid))}
+                    onKeyUp={() => setInputError(false)}
+                    />
+                    <label
+                    htmlFor={name}
+                    className={`absolute text-sm 
+                    ${
+                        errors[name] ? 'text-red-600 dark:text-red-500' : 'text-gray-500 dark:text-gray-400'
+                    } 
+                    duration-300 transform -translate-y-6 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 
+                    ${
+                        errors[name] ? 'peer-focus:text-red-600' : 'peer-focus:text-gray-500'
+                    } 
+                    peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-6 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto`}
+                    >
+                    {label}
+                    </label>
+                </div>
+                {
+                    inputError && 
+                    (
+                        <p className="mt-2 text-xs text-red-600 dark:text-red-400">
+                        <span className="font-medium">Oh, snapp!</span>{' '}
+                        {errors[name]?.type === 'required' ? 'Este campo es requerido' : errorMessage}
+                        </p>
+                    )
+                }
+            </div>
+        );
+    };
+
 
 const CustomInputPassword = ({ label, name, errors, register, trigger, pattern, errorMessage, onBlur, onKeyUp, type }) => 
 {
@@ -239,7 +291,8 @@ export default {
     Link,
     SelectComponent,
     LoadingButton, 
-    CustomInput, 
+    CustomInput,
+    CustomInput2,
     CustomInputPassword, 
     CustomRepeatPassword
 };
