@@ -72,13 +72,7 @@ code {
   max-width: none;
 }
 
-.tarjeta {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 350pt; /* O establece una altura fija si prefieres */
-  border: 1px solid #ccc;
-}
+
 
 
 .usersvg{
@@ -105,6 +99,105 @@ li a.active, li a:hover{
   transition: .5s; /*Trancicion de letras*/
   text-decoration: none;
 }
+.menu-icon {
+  display: none; /* Oculto por defecto */
+}
+
+@media (max-width: 768px) {
+  .navbar{
+    max-height: 0px;
+    opacity: 0; /* Empieza invisible */
+    transition: max-height 0.5s ease-in-out /* Suave transición de opacidad */
+  }
+  .navbar.open{
+    max-height: 300px;
+    opacity: 1; /* Empieza invisible */
+    transition: max-height 0.5s ease-in-out /* Suave transición de opacidad */
+  }
+  .navbar ul {
+    display: none;
+    opacity: 0; /* Empieza invisible */
+    transition: opacity 0.5s ease-in-out; /* Suave transición de opacidad */
+  }
+  .navbar.open ul {
+    display: flex;
+    flex-direction: column;
+    top: 70px;
+    right: 0;
+    background-color: rgb(85, 77, 77);
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out; /* Efecto de fade in */
+  }
+   /* Ocultar cada elemento individualmente hasta que el menú esté abierto */
+   .navbar ul li {
+    opacity: 0;
+    transform: translateY(-20px); /* Empezar arriba */
+    animation: slideDown 0.3s ease forwards;
+    animation-delay: 0s; /* Todos tienen animación por defecto */
+    color: white;
+  }
+  .navbar a{
+    color: white;
+    padding: 5pt 20pt; /* ancho de altura 9px y largo de 15px*/
+  }
+
+  /* Ajustar el tiempo de la animación para cada item */
+  .navbar ul li:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  .navbar ul li:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .navbar ul li:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .navbar ul li:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+  .navbar ul li:nth-child(5) {
+    animation-delay: 0.5s;
+  }
+  .navbar ul li:nth-child(6) {
+    animation-delay: 0.6s;
+  }
+
+  @keyframes slideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px); /* Empieza 20px más arriba */
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0); /* Termina en su posición original */
+    }
+  }
+
+  /* Estilos para el botón del menú (hamburguesa) */
+  .menu-icon {
+    display: block;
+    background: none;
+    background-color: rgb(85, 77, 77);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .menu-icon:hover{
+    display: block;
+    background: none;
+    background-color: rgb(48, 41, 41);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+}
+
+
+
 .divisor{
   display: flex;
   justify-content: center;
