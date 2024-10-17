@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { message, Modal } from 'antd';
 
-import { useAuth } from '../components/authUser'; 
+import { useAuth } from '../components/authUser';
 
 import BreadCrumb from '../components/BreadCrumb';
 
@@ -25,11 +25,11 @@ const Inicio = () => {
   const [randomProducts, setRandomProducts] = useState([]);
 
 
-  useEffect(()=>{
-    async function fetchData(){
-        const response = await TraerProductos();
-        setProducts(response.data);
-        setRandomProducts(getRandomProducts(response.data));
+  useEffect(() => {
+    async function fetchData() {
+      const response = await TraerProductos();
+      setProducts(response.data);
+      setRandomProducts(getRandomProducts(response.data));
     }
     fetchData();
     const interval = setInterval(() => {
@@ -44,52 +44,55 @@ const Inicio = () => {
     return shuffled.slice(0, 6);
   }
 
-  const comprar = async(id) => {
+  const comprar = async (id) => {
     const prodicto = {
-        usuario: idUser,
-        producto: id
+      usuario: idUser,
+      producto: id
     }
-  const aa = await InsertarCarrito(prodicto)
-  message.success('Se agrego al carrito');
-  console.log(aa.data)
-}
+    const aa = await InsertarCarrito(prodicto)
+    message.success('Se agrego al carrito');
+    console.log(aa.data)
+  }
 
   return (
     <div class="body">
       <div class="divisor">
-        <BreadCrumb/>
+        <BreadCrumb />
         <h1>{isAuthenticated ? `Hola ${userData.username}` : ""}</h1>
       </div>
-      
+
       <div className="relative">
-      <Carousel/>
-        <div className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/3 bg-green-600 text-white text-xl font-bold p-4 rounded-full">
-              Nueva colección de verano
+        <Carousel />
+        <div className="sm:w-1/4 sm:top-3/4 sm:mb-0 sm:right-3/4 sm:translate-x-3/4 sm:-translate-y-12 sm:bg-green-600 text-white sm:text-xl sm:font-bold p-4 sm:rounded-full
+                md:left-1/4 md:text-2xl mb-4 text-lg bg-blue-600">
+          Nueva colección de verano
         </div>
+
       </div>
-      <section className="w-full mt-8">
-          <h2 className="text-3xl font-bold text-center mb-4">Nuestros Productos</h2>
-          <div className='cccc'>
+      <section className="w-full">
+        <h2 className="text-3xl font-bold text-center mb-2">Nuestros Productos</h2>
+        <div className='cccc'>
           <div className="productos-container">
-                        {randomProducts.map((product) => (
-                            <div className="tarjeta" key={product.ID_Prenda}>
-                            <img
-                                src={`https://alevosia.host8b.me/image/${product.Imagen}`}
-                                alt={product.Nombre}
-                                className="imagen-producto"
-                            />
-                            <div className="informacion">
-                                <h2>{product.Nombre}</h2>
-                                <p>{product.Descripcion}</p>
-                                <p className="precio">${product.Precio}</p>
-                                {isAuthenticated ? <button className="boton-comprar" onClick={()=>comprar(product.ID_Prenda)}>Comprar</button> : <button className="boton-disabled" onClick={()=>comprar(product.ID_Prenda)} disabled>Debes iniciar sesión para poder comprar</button>}
-                            </div>
-                            </div>
-                        ))}
-                    </div>
+            {randomProducts.map((product) => (
+              <div className="tarjeta" key={product.ID_Prenda}>
+                <img
+                  src={`https://alevosia.host8b.me/image/${product.Imagen}`}
+                  alt={product.Nombre}
+                  className="imagen-producto"
+                />
+                <div className="informacion">
+                  <h2>{product.Nombre}</h2>
+                  <p>{product.Descripcion}</p>
+                  <p className="precio">${product.Precio}</p>
+                  {isAuthenticated ? <button className="boton-comprar" onClick={() => comprar(product.ID_Prenda)}>Comprar</button> : <button className="boton-disabled" onClick={() => comprar(product.ID_Prenda)} disabled>Debes iniciar sesión para poder comprar</button>}
                 </div>
-        </section>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
-  );}
+  );
+}
 
 export default Inicio;
