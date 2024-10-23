@@ -119,7 +119,21 @@ function PrivateRouteUser({ children }) {
   return children;
 }
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../sw.js', { scope: '/pwa/' })
+    .then(function(registration) {
+      console.log('Service Worker PWA registrado con éxito:', registration);
+
+      console.log('Service Worker registered with scope PWA:', registration.scope);
+    })
+    .catch(function(error) {
+      console.log('Error al registrar el service de la PWA:', error);
+    });
+}
+
 export default App;
+
+
 
 /*
 <header className="App-header">
