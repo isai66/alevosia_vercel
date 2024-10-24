@@ -1,6 +1,6 @@
 {
-  "name": "UTHH Virtual",
-  "short_name": "UTHH Virtual",
+  "name": "Alevosía",
+  "short_name": "Alevosía",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -46,8 +46,8 @@
     }
   ],
   
-  "theme_color": "#171717",
-  "background_color": "#02233a",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "orientation": "portrait",
   "screenshots": [
     {
