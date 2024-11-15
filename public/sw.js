@@ -6,12 +6,8 @@ const urlsToCache = [
   '/static/js/main.js',
   'avisoPriv',
   'Login',
-  'Signup',
-  '/public/image/logo.png',
-  '/public/image/main2.png',
-  '/src/image/main3.jpg',
-  '/src/image/main4.jpg',
-  '/src/image/main5.jpg'
+  'Signup'
+  
 
   
   // Agrega más archivos que desees almacenar en caché
