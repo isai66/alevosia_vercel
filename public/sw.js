@@ -1,15 +1,14 @@
+/* eslint-disable no-restricted-globals */
+
 const CACHE_NAME = 'my-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
   '/static/css/main.css',
   '/static/js/main.js',
-  'avisoPriv',
-  'Login',
-  'Signup'
-  
-
-  
+  '/avisoPriv',      // Verifica que estas rutas existen
+  '/Login',          // Verifica que estas rutas existen
+  '/Signup'          // Verifica que estas rutas existen
   // Agrega más archivos que desees almacenar en caché
 ];
 
@@ -17,7 +16,11 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        return cache.addAll(urlsToCache);
+        return cache.addAll(urlsToCache)
+          .catch((error) => {
+            console.error('Failed to cache', error);
+            throw error;
+          });
       })
   );
   console.log('[Service Worker] Installing Service Worker ...', event);
@@ -36,7 +39,7 @@ self.addEventListener('activate', (event) => {
       );
     })
   );
-  console.log('[Service Worker] Activating Service Worker .... .', event);
+  console.log('[Service Worker] Activating Service Worker ....', event);
   return self.clients.claim();
 });
 
