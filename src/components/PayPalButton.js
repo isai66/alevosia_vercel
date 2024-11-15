@@ -1,30 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import { message } from 'antd';
 
 const idUser = localStorage.getItem('id_usuario');
-const storedToken = localStorage.getItem('fcmToken');
 
 function PayPalButton({ total }) {
+  useEffect(() => {
+    // Solicitar permiso para las notificaciones
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          console.log("Permiso para notificaciones concedido.");
+        }
+      });
+    }
+  }, []);
+
   const refreshPage = () => {
     window.location.reload();
   };
 
-  const sendNotification = async (total) => {
-    try {
-      const response = await axios.post('https://firebase-alevosia.vercel.app/', {
-        tokenUser: storedToken,
-        title: "Compra exitosa Alevosia",
+  const sendNotification = (total) => {
+    if (Notification.permission === "granted") {
+      new Notification("Compra registrada", {
         body: `Compra realizada por un total de ${total} pesos`,
-        url: "https://alevosia-vercel.vercel.app/",
-        matricula: "20210643",
+        icon: "https://example.com/icon.png" // Puedes usar una URL de un icono aquí
       });
-      console.log('Notificación enviada con éxito:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Error al enviar la notificación:', error);
-      throw error;
     }
   };
 
@@ -60,11 +62,10 @@ function PayPalButton({ total }) {
             message.success('Compra realizada con éxito', details.payer.name.given_name);
 
             // Llamar a la función para enviar la notificación
-            await sendNotification(total)
-            refreshPage();
+            sendNotification(total);
 
             // Recargar la página después de completar la compra y enviar la notificación
-           // refreshPage();
+            refreshPage();
           } catch (error) {
             console.error('Error en la transacción:', error);
             message.error('Hubo un problema al completar la compra');
