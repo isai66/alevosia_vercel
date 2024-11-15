@@ -4,9 +4,7 @@ const urlsToCache = [
   '/index.html',
   '/static/css/main.css',
   '/static/js/main.js',
-  '/avisoPriv',
-  '/Login',
-  '/Signup'
+  
   // Agrega más archivos que desees almacenar en caché
 ];
 
