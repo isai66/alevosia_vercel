@@ -1,0 +1,32 @@
+name: React Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Configuración del entorno y chequeo del código
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Configuración de Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      # Instalación de dependencias
+      - name: Install dependencies
+        run: npm install
+
+      # Ejecución de pruebas
+      - name: Run tests
+        run: npm test -- --watchAll=false

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./favicon.jpg" rel="icon" type="image/jpg" />
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/estilos.css">
+    <title>Registro - Alevosía</title>
+    
+</head>
+<body>
+
+    <header class="encabezado">
+      <img class="logo" src="./image/logo.png">
+    </header>
+    <nav>
+      <ul>
+        <li class="si"><img class="usersvg" src="./image/user.svg"><a href="sesion.html">Entrar</a></li>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="men.html">Hombres</a></li>
+        <li><a href="women.html">Mujeres</a></li>
+        <li><a href="somos.html">¿Quiénes somos?</a></li>
+        <li><a href="Somos.html">Contáctanos</a></li>
+      </ul>
+      <div class="divisor">
+      <div ><img src="./image/divisor.png" ></div>
+      <div ><img src="./image/divisor.png" ></div>
+    </div>
+    </nav>
+
+  <section class="container">
+      <div class="contact-form">
+          
+            <form method="post" action="./registro.php" class="formulario" id="formulario" novalidate>
+                <!-- Grupo: Usuario -->
+                <div class="formulario__grupo" id="grupo__usuario">
+                    <label for="usuario" class="formulario__label">Usuario</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="usuario" id="usuario" placeholder="john123">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.</p>
+                </div>
+    
+                <!-- Grupo: Nombre -->
+                <div class="formulario__grupo" id="grupo__nombre">
+                    <label for="nombre" class="formulario__label">Nombre</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Isabel Mebarak">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El nombre no puede contener numeros ni quedar en blanco.</p>
+                </div>
+                <div class="input-box">
+                    <span class="details">Código Postal</span>
+                    <input type="text" onkeyup="Buscar()" onchange="Buscar()" class="input-text-line" id="CP" name="CP" required placeholder="00000">
+                </div>
+                <div class="input-box">
+                    <span class="details">Estado:</span> <br>
+                    <input type="text" class="input-text-line" id="txtestado" name="txtestado" disabled="disabled" required placeholder="Dato Autorellenable">
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Municipio:</span>
+                    <input type="text" class="input-text-line" id="txtmunicipio" name="txtmunicipio" disabled="disabled" required placeholder="Dato Autorellenable">
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Colonia:</span>
+                    <select name="txtcolonia" id="txtcolonia" class="txtcolonia" aria-label="Default select example" required>
+                      <option value="0" selected>Seleccionar Colonia</option>
+                    </select>
+                  </div>
+                  <p>
+                  <label for="Calle">Calle:</label>
+                  <input type="text" name="Calle" id="Calle" class="input-text-line" required=""  pattern="[A-Za-z]+" placeholder="Palma">
+                  </p>    
+                  <p>
+                  <label for="Numero_Interior">Número Interior: (Opcional)</label>
+                  <input type="text" name="Numero_Interior" id="Numero_Interior" class="input-text-line" pattern="^[0-9]+" placeholder="6">
+                  </p>
+                  <p>
+                  <label for="Numero_Exterior">Número Exterior:</label>
+                  <input type="text" name="Numero_Exterior" id="Numero_Exterior" class="input-text-line" pattern="^[0-9]+" placeholder="3">
+                  </p>
+    
+                <!-- Grupo: Contraseña -->
+                <div class="formulario__grupo" id="grupo__password">
+                    <label for="password" class="formulario__label">Contraseña</label>
+                    <div class="formulario__grupo-input">
+                        <input type="password" class="formulario__input" name="password" id="password">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">La contraseña tiene que ser de 4 a 12 dígitos.</p>
+                </div>
+    
+                <!-- Grupo: Contraseña 2 -->
+                <div class="formulario__grupo" id="grupo__password2">
+                    <label for="password2" class="formulario__label">Repetir Contraseña</label>
+                    <div class="formulario__grupo-input">
+                        <input type="password" class="formulario__input" name="password2" id="password2">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">Ambas contraseñas deben ser iguales.</p>
+                </div>
+    
+                <!-- Grupo: Correo Electronico -->
+                <div class="formulario__grupo" id="grupo__correo">
+                    <label for="correo" class="formulario__label">Correo Electrónico</label>
+                    <div class="formulario__grupo-input">
+                        <input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.</p>
+                </div>
+    
+                <!-- Grupo: Teléfono -->
+                <div class="formulario__grupo" id="grupo__telefono">
+                    <label for="telefono" class="formulario__label">Teléfono</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="4491234567">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El telefono solo puede contener numeros y el maximo son 14 dígitos.</p>
+                </div>
+    
+                <!-- Grupo: Terminos y Condiciones -->
+                <div class="formulario__grupo" id="grupo__terminos">
+                    <label class="formulario__label">
+                        <input class="formulario__checkbox" type="checkbox" name="terminos" id="terminos">
+                        Acepto los Terminos y Condiciones
+                    </label>
+                </div>
+    
+                <div class="formulario__mensaje" id="formulario__mensaje">
+                    <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+                </div>
+    
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                    <button type="submit" class="formulario__btn">Enviar</button>
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+                </div>
+            </form>
+              
+              
+      </div>
+      </section>   
+      </div>
+  </div>
+
+
+
+<script src="//code.jivosite.com/widget/R5EmmfZbLc" async></script>
+
+
+<!--::::Pie de Pagina::::::-->
+<footer class="pie-pagina">
+        <div class="grupo-1">
+        <div class="box">
+                <h2>UBICACION</h2>
+                <p>Calle Plaza de la Revolución Mexicana, esquina con calle Doctor GEA González, Centro. Huejutla de Reyes Hidalgo, CP 43000.</p>
+            </div>
+            <div class="box">
+                <h2>PAGA CON TU PREFERENCIA</h2>
+            <li><p>Tarjetas de regalo</p></li>
+            <li><p>Formas de pago</p></li>
+            <li><p>Facturacion electronica</p></li>
+                
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+            <div class="box">
+                <h2>Derechos</h2>
+                <div class="grupo-2">
+                <small>&copy; 2022 <b>ATUENDALIZATE</b> - Todos los Derechos Reservados.</small>
+                </div>
+            </div>
+
+        </div>
+
+        
+</footer>
+</body>
+</html>
+
+<script src="contact-form.js"></script>
+<script>
+    function Buscar()
+  {
+    let CodigoPostal=document.querySelector("#CP").value;
+    consultarAPI(CodigoPostal);
+  }
+  const consultarAPI=async(CodigoPostal)=>{
+  const ApiKey='cff1095c-acf3-47ab-8bb0-ed0979e4f30b';
+  
+  const urlApi= `https://api.copomex.com/query/info_cp/${CodigoPostal}?type=simplified&token=${ApiKey}`;
+
+  console.log(urlApi)
+  fetch(urlApi)
+  .then(response=>response.json())
+  .then(result=>{
+    if(!result.error){
+
+    document.getElementById('CP').className = 'content';
+
+    document.getElementById('txtestado').value = result.response.estado; 
+    document.getElementById('txtmunicipio').value = result.response.municipio; 
+    LimpiarSelect();
+    crearOpciones(result.response.asentamiento);}
+    else
+    {
+      document.getElementById('CP').className = 'form-control is-invalid';
+      document.getElementById('error_message').innerText = result.error_message;
+
+      // Limpiar inputs
+      document.getElementById('txtestado').value = ''; 
+      document.getElementById('txtmunicipio').value = ''; 
+      // Limpiar opciones de select en caso de que existan
+      LimpiarSelect();
+    }
+  })
+  .catch(err => console.error(err));
+}
+
+function crearOpciones(arreglo) {
+  let select = document.getElementById('txtcolonia');
+  for (let i = 0; i < arreglo.length; i++) {
+      let opcion = document.createElement('option');
+      // Asigna el valor de la opcion
+      opcion.value = arreglo[i];
+      // Asigna el contenido de text de la opcion
+      opcion.textContent = arreglo[i];
+      select.options.add(opcion);
+  }
+}
+
+function LimpiarSelect() {
+  // Recorre y elimina la opciones que tenga el select y solo deja la opcion por defecto
+  for (let i = document.getElementById('txtcolonia').options.length; i >= 1; i--) {
+      document.getElementById('txtcolonia').remove(i);
+  }
+};
+</script>

@@ -1,0 +1,18 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+
+<IfModule mod_headers.c>
+
+    Header always append X-Frame-Options SAMEORIGIN
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+    Header set Access-Control-Max-Age "86400"
+    Report-To "{ \"group\": \"csp-endpoint\", \"max_age\": 10886400, \"endpoints\": [{ \"url\": \"https://example.com/report-endpoint\" }] }"
+</IfModule>

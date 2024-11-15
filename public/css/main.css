@@ -1,0 +1,214 @@
+body{
+    background-color: #eee4e0;
+    margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+.encabezado{
+    height: 85pt;
+    display: flex;
+    justify-content: center;
+}
+.usersvg{
+    height: 20pt;
+}
+nav ul{
+    text-align:center;
+}
+nav ul li{
+    display: inline-block;
+    margin-left: 10pt;
+    margin-right: 10pt;
+}
+nav ul li a{
+    color: rgb(44, 38, 38);/*color del trexto*/
+    font-size: 13pt;
+    padding: 10pt 15pt; /* ancho de altura 9px y largo de 15px*/
+    border-radius: 10pt; /*borde del rectangulo */
+    text-transform: uppercase; /*textodel menu*/
+}
+li a.active, li a:hover{
+    background: rgb(172, 172, 172); /*color de lo que incluye el menu */
+    transition: .5s; /*Trancicion de letras*/
+}
+.divisor{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5pt;
+}
+.main{
+    display: flex;
+    justify-content: center;
+    height: 350pt;
+    padding-bottom: 20pt;
+}
+.main1{
+    position: absolute;
+    height: 350pt;
+}
+.main2{
+    display: flex;
+    position: absolute;
+    height: 180pt;
+    top: 315pt;
+    left: 150pt;
+    color: white;
+    text-shadow:1pt 1pt 2pt black;
+}
+.venta{
+    display: flex;
+    justify-content: space-around;
+    height: 200pt;
+    padding-left: 110pt;
+    padding-right: 110pt;
+}
+.banner1{
+    display: flex;
+    justify-content: center;
+}
+.producto{
+    padding-top: 20pt;
+    display: flex;
+    justify-content: center;
+    height: 450px;
+}
+.carrito{
+    background-color: rgba(238, 228, 224, 0.7);
+    color: rgba(37, 30, 27, 0.7);
+    border-color: #251E1B;
+    height: 8%;
+    margin-bottom: 2%;
+}
+.comprar{
+    color: #EEE4E0;
+    background-color: #251E1B;
+    border-width: 0px;
+    height: 8%;
+}
+.detalles{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 1% 17% 0% 17%;
+}
+
+
+
+
+.pie-pagina{
+    width: 100%;
+    background-color: rgb(44, 38, 38);
+    display: flex;
+    color: rgb(139, 20, 20);
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.pie-pagina .grupo-1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:50px;
+    padding: 45px 0px;
+}
+.pie-pagina .grupo-1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pie-pagina .grupo-1 .box figure img{
+    width: 250px;
+}
+.pie-pagina .grupo-1 .box h2{
+    color: #fff;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+.pie-pagina .grupo-1 .box p{
+    color: #efefef;
+    margin-bottom: 10px;
+}
+.pie-pagina .grupo-1 .red-social a{
+    display: inline-block;
+    text-decoration: none;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: #fff;
+    margin-right: 10px;
+ 
+    text-align: center;
+    transition: all 300ms ease;
+}
+.pie-pagina .grupo-1 .red-social a:hover{
+    color: aqua;
+}
+.pie-pagina .grupo-2{
+    background-color: #0a1a2a;
+    padding: 15px 10px;
+    text-align: center;
+    color: #fff;
+}
+.pie-pagina .grupo-2 small{
+    font-size: 15px;
+}
+
+
+.container{
+    width: 500px;
+    background:#776554;
+    padding: 30px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 4px;
+    font-family: 'calibri';
+}
+.container h3{
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: aliceblue;
+    text-align: center;
+}
+
+.input-text-line{
+    width: 100%;
+    background: #feffff;
+    padding: 10px;
+    border-radius: 48px;
+    margin-bottom: 18px;
+    border: 3px solid transparent;
+    font-family: 'calibri';
+    font-family: 18px;
+    color: rgb(8, 7, 7);
+}
+
+.buscar{
+    padding-top: 10px;
+    width: 10%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.boton{
+    width: 100%;
+    background: #ffe293;
+    border: none;
+    padding: 14px;
+    color: rgb(0, 0, 0);
+    text-shadow:#000000;
+    margin: 16 px 0;
+    font-size: 16px;
+    box-shadow: 2px 9px 20px rgb(#000000);
+}
