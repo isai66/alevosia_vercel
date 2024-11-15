@@ -9,9 +9,9 @@ const urlsToCache = [
   '/Signup',
   '/public/image/logo.png',
   '/public/image/main2.png',
-  '/image/main3.jpg',
-  '/image/main4.jpg',
-  '/image/main5.jpg'
+  '/src/image/main3.jpg',
+  '/src/image/main4.jpg',
+  '/src/image/main5.jpg'
 
   
   // Agrega más archivos que desees almacenar en caché
