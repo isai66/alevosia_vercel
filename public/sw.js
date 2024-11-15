@@ -1,52 +1,54 @@
-import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
-import { CacheableResponsePlugin } from 'workbox-cacheable-response';
-import { ExpirationPlugin } from 'workbox-expiration';
-import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
+const CACHE_NAME = 'my-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/static/css/main.css',
+  '/static/js/main.js',
+  '/avisoPriv',
+  '/Login',
+  '/Signup'
+  // Agrega más archivos que desees almacenar en caché
+];
 
-// Precargar y almacenar en caché los archivos especificados
-precacheAndRoute(self.__WB_MANIFEST);
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        return cache.addAll(urlsToCache)
+          .catch((error) => {
+            console.error('Failed to cache', error);
+            throw error;
+          });
+      })
+  );
+  console.log('[Service Worker] Installing Service Worker ...', event);
+});
 
-// Limpiar cachés obsoletos
-cleanupOutdatedCaches();
+self.addEventListener('activate', (event) => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  console.log('[Service Worker] Activating Service Worker ....', event);
+  return self.clients.claim();
+});
 
-// Estrategia de caché para activos estáticos (imágenes, CSS, JS)
-registerRoute(
-  ({ request }) => request.destination === 'image' || request.destination === 'script' || request.destination === 'style',
-  new CacheFirst({
-    cacheName: 'static-assets-cache',
-    plugins: [
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-      new ExpirationPlugin({
-        maxEntries: 60,
-        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 días
-      }),
-    ],
-  })
-);
-
-// Estrategia de caché para documentos HTML
-registerRoute(
-  ({ request }) => request.destination === 'document',
-  new StaleWhileRevalidate({
-    cacheName: 'html-cache',
-    plugins: [
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-      new ExpirationPlugin({
-        maxEntries: 20,
-        maxAgeSeconds: 7 * 24 * 60 * 60, // 7 días
-      }),
-    ],
-  })
-);
-
-// Manejar mensajes del cliente
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+  );
 });
