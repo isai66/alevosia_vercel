@@ -6,9 +6,9 @@ const urlsToCache = [
   '/index.html',
   '/static/css/main.css',
   '/static/js/main.js',
-  '/avisoPriv',      // Verifica que estas rutas existen
-  '/Login',          // Verifica que estas rutas existen
-  '/Signup'          // Verifica que estas rutas existen
+  '/avisoPriv',
+  '/Login',
+  '/Signup'
   // Agrega más archivos que desees almacenar en caché
 ];
 
