@@ -44,31 +44,31 @@ function App() {
         <Routes>
           <Route path='/' element={<Plantilla/>}>
             <Route path='/' element={<Inicio/>}/>
-            <Route path='Inicio2' element={<Inicio2/>}/>
-            <Route path='Men' element={<Men/>}/>
-            <Route path='Women' element={<Women/>}/>
-            <Route path='Somos' element={<Somos/>}/>
-            <Route path='Busqueda' element={<Busqueda/>}/>
-            <Route path="Women/Producto1" element={<Producto1/>}/>
-            <Route path="Signup" element={<Signup/>}/>
-            <Route path="Login" element={<Login2/>}/>
-            <Route path="Registro2" element={<Registro2/>}/>
-            <Route path="avisoPriv" element={<AvisoPriv/>}/>
+            <Route path='/Inicio2' element={<Inicio2/>}/>
+            <Route path='/Men' element={<Men/>}/>
+            <Route path='/Women' element={<Women/>}/>
+            <Route path='/Somos' element={<Somos/>}/>
+            <Route path='/Busqueda' element={<Busqueda/>}/>
+            <Route path="/Women/Producto1" element={<Producto1/>}/>
+            <Route path="/Signup" element={<Signup/>}/>
+            <Route path="/Login" element={<Login2/>}/>
+            <Route path="/Registro2" element={<Registro2/>}/>
+            <Route path="/avisoPriv" element={<AvisoPriv/>}/>
 
-            <Route path="Dashboard" element={<PrivateRouteUser><Dashboard/></PrivateRouteUser>}/>
+            <Route path="/Dashboard" element={<PrivateRouteUser><Dashboard/></PrivateRouteUser>}/>
 
-            <Route path="Profile" element={<PrivateRouteUser><Profile/></PrivateRouteUser>}/>   
-            <Route path="Cart" element={<PrivateRouteUser><CartContent/></PrivateRouteUser>}/>
-            <Route path="Alta" element={<PrivateRoute><AltaProductos/></PrivateRoute>}/>
+            <Route path="/Profile" element={<PrivateRouteUser><Profile/></PrivateRouteUser>}/>   
+            <Route path="/Cart" element={<PrivateRouteUser><CartContent/></PrivateRouteUser>}/>
+            <Route path="/Alta" element={<PrivateRoute><AltaProductos/></PrivateRoute>}/>
 
-            <Route path="EnviarCorreo" element={<EnviarCorreo/>}/>
-            <Route path="ActualizarContra" element={<ActualizarContra/>}/>
-            <Route path="Descripcion/:id" element={<DescripcionProductos/>}/>
-            <Route path="PedidoEstado" element={<PedidoEstado/>}/>
-            <Route path="Dashboard/AdminProfile" element={<AdminProfile/>}/>
-            <Route path="Dashboard/UsersProfile" element={<UsersProfile/>}/>
-            <Route path="Dashboard/EditProfile" element={<PrivateRouteUser><EditProfile/></PrivateRouteUser>}/>
-            <Route path="Dashboard/EditProfileAdmin" element={<PrivateRoute><EditProfileAdmin/></PrivateRoute>}/>
+            <Route path="/EnviarCorreo" element={<EnviarCorreo/>}/>
+            <Route path="/ActualizarContra" element={<ActualizarContra/>}/>
+            <Route path="/Descripcion/:id" element={<DescripcionProductos/>}/>
+            <Route path="/PedidoEstado" element={<PedidoEstado/>}/>
+            <Route path="/Dashboard/AdminProfile" element={<AdminProfile/>}/>
+            <Route path="/Dashboard/UsersProfile" element={<UsersProfile/>}/>
+            <Route path="/Dashboard/EditProfile" element={<PrivateRouteUser><EditProfile/></PrivateRouteUser>}/>
+            <Route path="/Dashboard/EditProfileAdmin" element={<PrivateRoute><EditProfileAdmin/></PrivateRoute>}/>
 
       
             <Route path='*' element={<NotFound/>}/>
