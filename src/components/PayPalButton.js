@@ -23,7 +23,7 @@ function PayPalButton({ total }) {
 
   const sendNotification = (total) => {
     if (Notification.permission === "granted") {
-      new Notification("Compra registrada", {
+      new Notification("¡Compra realizada con exito!", {
         body: `Compra realizada por un total de ${total} pesos`,
         icon: "https://example.com/icon.png" // Puedes usar una URL de un icono aquí
       });
