@@ -1,0 +1,67 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - release/*
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Configuración del entorno y chequeo del código
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Configuración de Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      # Instalación de dependencias
+      - name: Install dependencies
+        run: npm install
+
+      # Ejecución de pruebas
+      - name: Run tests
+        run: npm test -- --watchAll=false
+
+  deploy-to-hostinger:
+    needs: test # Este trabajo solo se ejecutará si el trabajo "test" finaliza correctamente
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
+
+      - name: List files after build
+        run: ls -R # Listará todos los archivos y carpetas, incluyendo build
+
+      # Instala ncftp para que el comando ncftpput esté disponible
+      - name: Install ncftp
+        run: sudo apt-get update && sudo apt-get install -y ncftp
+
+      - name: Deploy to Hostinger
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          ncftpput -R -v -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_HOST" / build/*

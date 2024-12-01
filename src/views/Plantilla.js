@@ -31,7 +31,7 @@ const Plantilla = props => {
   return (
     <div class="body">
       <header class="encabezado">
-        <img class="logo" src={logo} />
+        <img class="logo alevosia" src={logo} />
         {/* Botón para desplegar el menú */}
         <button className="menu-icon" onClick={toggleMenu}>
           {menuOpen ? <FaXmark/> : <FaBars />}
