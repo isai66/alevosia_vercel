@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "18": "^0.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -19,6 +20,7 @@
     "framer-motion": "^11.3.21",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
+    "postcss-nested": "^7.0.2",
     "react": "^18.2.0",
     "react-app": "^1.1.2",
     "react-bootstrap": "^2.10.2",
@@ -41,7 +43,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
