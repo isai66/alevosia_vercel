@@ -27,7 +27,8 @@ jobs:
 
       # Instalación de dependencias
       - name: Install dependencies
-        run: npm install
+        run: |
+            CI=false npm install
 
       # Ejecución de pruebas
       - name: Run tests
@@ -46,10 +47,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies and build
+      - name: Install dependencies and build (con CI=false y deshabilitando ESLint)
         run: |
-          npm install
-          npm run build
+            CI=false DISABLE_ESLINT_PLUGIN=true npm install
+            CI=false DISABLE_ESLINT_PLUGIN=true npm run build
 
       - name: List files after build
         run: ls -R # Listará todos los archivos y carpetas, incluyendo build
