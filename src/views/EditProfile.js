@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaUserShield, FaUser, FaPhoneAlt } from "react-icons/fa";
+import { FaUserShield, FaUser, FaPhoneAlt, FaCamera } from "react-icons/fa";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { MdMarkEmailRead } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import { Modal, Button, message } from 'antd';
 import "../css/signup.css";
+import { AiOutlineLoading } from "react-icons/ai";
+import {Dropdown } from 'flowbite-react';
 
 const EditProfile = () => {
+    const [foto, setFoto] = useState("");
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [codigoPostal, setCP] = useState("");
@@ -27,33 +30,48 @@ const EditProfile = () => {
     const [errors, setErrors] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    
+    const [loading, setLoading] = useState(false);
+    const fileInputRef = useRef(null);
+    const cameraInputRef = useRef(null);
+    const [profileImage, setProfileImage] = useState(null);
+    const [isCameraOpen, setIsCameraOpen] = useState(false);
+    const videoRef = useRef(null);
+    const canvasRef = useRef(null);
     const idUser = localStorage.getItem('id_usuario')
     
     const navigate = useNavigate();
 
+
+    const traerDatosUsuario = () => {
+                // Aquí cargarías los datos del usuario actual desde la API
+                Axios.get(`https://alev-backend-vercel.vercel.app/getUserData/${idUser}`)
+                .then(response => {
+                    const userData = response.data;
+                    const profileImageUrl = userData?.vchFotoPerfil
+                    ? `https://alevosia.host8b.me/image/${userData.vchFotoPerfil}`
+                    : `https://robe.host8b.me/assets/imagenes/userProfile.png`; // Enlace alternativo cuando vchFotoPerfil es null o usuario no está autenticado 
+                    setFoto(profileImageUrl);
+                    setNombre(userData.nombre);
+                    setApellido(userData.apellido);
+                    setCP(userData.codigopostal);
+                    setEstado(userData.estado);
+                    setMunicipio(userData.municipio);
+                    setColonias([userData.colonia]);
+                    setColonia(userData.colonia);
+                    setCalle(userData.calle);
+                    setNumInt(userData.numinterior);
+                    setNumExt(userData.numexterior);
+                    setTelefono(userData.telefono);
+                    setUsuario(userData.username);
+                    setCorreo(userData.email);
+                })
+                .catch(error => {
+                    console.error("Error fetching user data: ", error);
+                });
+    }
+
     useEffect(() => {
-        // Aquí cargarías los datos del usuario actual desde la API
-        Axios.get(`https://alev-backend-vercel.vercel.app/getUserData/${idUser}`)
-            .then(response => {
-                const userData = response.data;
-                setNombre(userData.nombre);
-                setApellido(userData.apellido);
-                setCP(userData.codigopostal);
-                setEstado(userData.estado);
-                setMunicipio(userData.municipio);
-                setColonias([userData.colonia]);
-                setColonia(userData.colonia);
-                setCalle(userData.calle);
-                setNumInt(userData.numinterior);
-                setNumExt(userData.numexterior);
-                setTelefono(userData.telefono);
-                setUsuario(userData.username);
-                setCorreo(userData.email);
-            })
-            .catch(error => {
-                console.error("Error fetching user data: ", error);
-            });
+        traerDatosUsuario();
     }, []);
 
      useEffect(() => {
@@ -149,6 +167,115 @@ const EditProfile = () => {
         setIsModalVisible(false);
     };
 
+    const handleButtonClick = () => {
+        fileInputRef.current.click();
+      };
+
+      const openCamera = async () => {
+        setIsCameraOpen(true);
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          videoRef.current.srcObject = stream;
+          videoRef.current.play();
+        } catch (error) {
+          console.error("No se pudo acceder a la cámara:", error);
+        }
+      };
+
+      const handleFileChange = async(event) => {
+        const file = event.target.files[0];
+          if (file) {
+            const timestamp = new Date().toISOString().replace(/[-:.]/g, ''); // Marca de tiempo única
+            const filename = `${usuario}_captured_${timestamp}.png`;
+    
+            setLoading(true);
+          // Crear un objeto FormData y agregar el archivo y los datos del usuario
+          const formData = new FormData();
+          formData.append('file', file, filename);
+          formData.append('user', usuario);
+          
+    
+          try {
+            // Subir el archivo al servidor usando fetch
+            const response = await fetch(`https://alevosia.host8b.me/Web_Services/UploadImagen.php`, {
+                method: 'POST',
+              body: formData,
+            });
+    
+            const data = await response.json();
+    
+            if(data.done)
+            {
+                traerDatosUsuario();
+              console.log(data)
+            }
+            
+          } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false);
+          }
+        }
+       //window.location.reload(); // Recarga la página
+      };
+
+      const capturePhoto = () => {
+        const canvas = canvasRef.current;
+        const video = videoRef.current;
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        const capturedImage = canvas.toDataURL('image/png');
+        setProfileImage(capturedImage); // Muestra la imagen capturada
+    
+        // Convertir la imagen capturada a archivo Blob para enviar al servidor
+        canvas.toBlob(async (blob) => {
+  
+          // Generar un nombre de archivo único usando la matrícula y la fecha/hora
+          const timestamp = new Date().toISOString().replace(/[-:.]/g, ''); // Marca de tiempo única
+          const filename = `${usuario}_captured_${timestamp}.png`;
+  
+          const formData = new FormData();
+          formData.append('file', blob, filename); // Asignar el nombre personalizado
+          formData.append('user', usuario); // Matrícula del usuario
+    
+          try {
+            setLoading(true);
+            const response = await fetch(`https://alevosia.host8b.me/Web_Services/UploadImagen.php`, {
+                method: 'POST',
+                body: formData,
+            });
+    
+            const data = await response.json();
+            if (data.done) {
+                traerDatosUsuario();
+
+              console.log('Imagen capturada subida con éxito:', data);
+            } else {
+              console.error('Error al subir la imagen capturada:', data.message);
+            }
+          } catch (error) {
+            console.error('Error de red al subir la imagen capturada:', error);
+          }
+          finally{
+            setLoading(false);
+          }
+        });
+    
+        closeCamera();
+      };
+        // Función para cerrar la cámara
+    const closeCamera = () => {
+      const stream = videoRef.current.srcObject;
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+      setIsCameraOpen(false);
+    };
+  
+
     return (
         <div className="signupPage">
             <div className='containersignup'>
@@ -156,6 +283,83 @@ const EditProfile = () => {
                     <h2>Edita tu Perfil</h2>
                 </div>
                 <form onSubmit={updateUser} className="formsignup grid">
+                <div className="relative inline-block">
+                {loading ? 
+                  (
+                    <div className="flex items-center justify-center h-20 w-20 full bg-gray-200 mb-2 mr-2 ">
+                      <AiOutlineLoading className="animate-spin text-gray-500" size={24} />
+                    </div>
+                  ) 
+                  : 
+                  (
+                    <div className="relative inline-block">
+
+                      <img
+                        alt="Profile"
+                        src={foto}
+                        className="mb-2 mr-2 h-20 w-20 rounded-lg object-cover"
+                      />
+                    <Dropdown
+                      className="w-max" // Ajusta el ancho según lo necesites
+
+                      label={
+                        
+                      <button
+                        className="absolute bottom-0 right-0 mb-1 mr-1 bg-white p-1 rounded-full border border-gray-300"
+                      >
+                        <FaCamera size={14} className="text-gray-600" />
+                      </button>
+                    }
+                      inline={true}
+                      arrowIcon={false}
+                    >
+                      <Dropdown.Item onClick={handleButtonClick}>
+                        Elegir de Archivos
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={openCamera}>
+                        Tomar Foto
+                      </Dropdown.Item>
+                    </Dropdown>
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                      />
+                      <input
+                        type="file"
+                        ref={cameraInputRef}
+                        className="hidden"
+                        accept="image/*"
+                        capture="user"
+                        onChange={handleFileChange}
+                      />
+                      {isCameraOpen && (
+                           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                           <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
+                             <video ref={videoRef} autoPlay className="rounded-lg border-2 border-gray-300 w-full" />
+                             <canvas ref={canvasRef} style={{ display: 'none' }} />
+                             <div className="flex justify-around mt-4">
+                                <div className="w-40">
+                                <Button color="gray" onClick={capturePhoto} >
+                                Tomar Foto
+                                </Button>
+                           
+                                </div>
+                                <Button color="gray" onClick={closeCamera} >
+                                  Cancelar
+                                </Button>
+                             </div>
+                           </div>
+                         </div>
+                      )}
+                    </div>
+                    
+                  )
+                }
+
+              </div>
                 <div class='inputDiv'>
                             <label htmlFor='nombre'>Nombre: </label>
                             <div className="mt-1 flex rounded-md shadow-sm">
