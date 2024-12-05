@@ -82,33 +82,44 @@ self.addEventListener('activate', (event) => {
     return self.clients.claim();
 });
 
-// Evento de fetch: Recupera recursos de la caché o de la red
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request)
-            .then((cachedResponse) => {
-                // Si el recurso está en caché, devuélvelo
-                if (cachedResponse) {
-                    return cachedResponse;
-                }
+    // Solo cacheamos solicitudes GET
+    if (event.request.method !== 'GET') {
+        return;
+    }
 
-                // Si no está en caché, intenta obtenerlo de la red
-                return fetch(event.request)
-                    .then((networkResponse) => {
-                        // Almacena en caché la respuesta obtenida de la red
-                        return caches.open(CACHE_NAME).then((cache) => {
-                            cache.put(event.request, networkResponse.clone());
-                            return networkResponse;
-                        });
-                    })
-                    .catch(() => {
-                        // Manejo de fallos: Devuelve una página de respaldo o recurso predeterminado
-                        if (event.request.destination === 'document') {
-                            return caches.match('/index.html');
-                        } else if (event.request.destination === 'image') {
-                            return caches.match('/image/fallback.jpg'); // Imagen predeterminada
-                        }
-                    });
+    event.respondWith(
+        fetch(event.request)
+            .then((networkResponse) => {
+                return caches.open(CACHE_NAME).then((cache) => {
+                    // Cacheamos la respuesta solo si es exitosa
+                    if (networkResponse && networkResponse.status === 200) {
+                        cache.put(event.request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                });
+            })
+            .catch(() => {
+                return caches.match(event.request).then((cachedResponse) => {
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+                    if (event.request.destination === 'document') {
+                        return caches.match('/index.html');
+                    } else if (event.request.destination === 'image') {
+                        return caches.match('/image/fallback.jpg'); // Imagen predeterminada
+                    }
+                });
             })
     );
 });
+
+
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data.action === 'reload') {
+            window.location.reload();
+        }
+    });
+}
